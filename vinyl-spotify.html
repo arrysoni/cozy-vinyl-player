@@ -368,7 +368,12 @@ async function loadPlaylists(){
     return;
   }
   crate.innerHTML='';
-  data.items.forEach(pl=>{
+  const validPlaylists = data.items.filter(pl => pl && pl.tracks);
+  if(!validPlaylists.length){
+    crate.innerHTML = '<p class="empty">No playable playlists found on this account.</p>';
+    return;
+  }
+  validPlaylists.forEach(pl=>{
     const img = pl.images && pl.images[0] ? pl.images[0].url : '';
     const div = document.createElement('div');
     div.className='sleeve';
@@ -382,8 +387,11 @@ async function loadPlaylists(){
   });
 }
 
+let spotifySdkReady = false;
+window.onSpotifyWebPlaybackSDKReady = ()=>{ spotifySdkReady = true; };
+
 function initPlayer(){
-  window.onSpotifyWebPlaybackSDKReady = ()=>{
+  const setupPlayer = ()=>{
     player = new Spotify.Player({
       name: 'Crate — Vinyl Simulator',
       getOAuthToken: cb => cb(accessToken),
@@ -414,8 +422,12 @@ function initPlayer(){
 
     player.connect();
   };
-  // if SDK already loaded before this ran
-  if(window.Spotify) window.onSpotifyWebPlaybackSDKReady();
+
+  if(spotifySdkReady && window.Spotify){
+    setupPlayer();
+  } else {
+    window.onSpotifyWebPlaybackSDKReady = ()=>{ spotifySdkReady = true; setupPlayer(); };
+  }
 }
 
 async function playPlaylist(pl, sleeveEl, img){
