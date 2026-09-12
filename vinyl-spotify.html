@@ -8,20 +8,20 @@
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Caveat:wght@500;600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
   :root{
-    --bg-1:#f7ebda;
-    --bg-2:#ecd3ac;
-    --wood:#a9754a;
-    --wood-dark:#7c5535;
-    --plank:#8f6440;
-    --ink:#3b2417;
-    --cream:#fff8ed;
-    --accent:#c97b4a;
-    --accent-2:#8b5e34;
+    --bg-1:#e8ddcb;
+    --bg-2:#d2bf9f;
+    --wood:#cdbfa8;
+    --wood-dark:#a89477;
+    --plank:#c3b295;
+    --ink:#3b2b1c;
+    --cream:#fdf6ea;
+    --accent:#8a5a34;
+    --accent-2:#6b4a30;
     --brass:#b3874b;
     --brass-light:#8b5e34;
-    --felt:#17110c;
+    --felt:#150e08;
     --card-bg:rgba(255,255,255,0.4);
-    --card-border:rgba(139,94,52,0.25);
+    --card-border:rgba(107,74,48,0.25);
     --steam:rgba(255,255,255,0.55);
     --shadow:rgba(90,58,30,0.25);
     --btn-text:#2b1c14;
@@ -140,7 +140,7 @@
     display:none;
     position:relative;
     background:
-      repeating-linear-gradient(90deg, rgba(0,0,0,0.05) 0 2px, transparent 2px 90px),
+      radial-gradient(circle at 50% 15%, rgba(255,255,255,0.25), transparent 55%),
       linear-gradient(160deg, var(--plank), var(--wood-dark));
     border-radius:18px;
     padding:36px 28px 28px;
@@ -177,23 +177,25 @@
   }
   .plinth{
     position:relative;
-    width:220px;height:220px;
+    width:240px;height:240px;
     flex-shrink:0;
   }
   .platter{
-    width:220px;height:220px;
+    width:240px;height:240px;
     border-radius:50%;
-    background:radial-gradient(circle at 50% 50%, var(--felt) 0 30%, #17140f 31% 100%);
+    background:radial-gradient(circle at 50% 50%, #1c130a 0 26%, #0e0904 27% 100%);
     position:relative;
-    box-shadow:inset 0 0 0 6px rgba(0,0,0,0.4), 0 8px 20px rgba(0,0,0,0.5);
+    box-shadow:inset 0 0 0 6px rgba(0,0,0,0.4), 0 8px 24px rgba(0,0,0,0.5);
   }
   .record{
     position:absolute;top:10px;left:10px;
-    width:200px;height:200px;
+    width:220px;height:220px;
     border-radius:50%;
     background:
-      repeating-radial-gradient(circle, #0c0a09 0 3px, #1c1815 4px 6px);
-    box-shadow:0 0 0 1px rgba(255,255,255,0.03);
+      radial-gradient(circle at 32% 26%, rgba(255,244,222,0.4), transparent 32%),
+      repeating-radial-gradient(circle, rgba(10,5,2,0.4) 0 2px, rgba(10,5,2,0) 3px 5px),
+      linear-gradient(135deg, #8a5a30 0%, #4a2c14 55%, #1c0f06 100%);
+    box-shadow:0 0 0 1px rgba(255,255,255,0.06);
     display:flex;align-items:center;justify-content:center;
     opacity:0;
     transform:scale(0.9);
@@ -202,12 +204,20 @@
   .record.on{opacity:1;transform:scale(1);}
   .record.spin{animation:spin 3.2s linear infinite;}
   @keyframes spin{to{transform:rotate(360deg);}}
+  .groove-text{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;}
+  .groove-text text{
+    font-family:'Caveat',cursive;
+    font-size:11.5px;
+    fill:var(--cream);
+    opacity:0.6;
+    letter-spacing:1px;
+  }
   .label{
-    width:70px;height:70px;border-radius:50%;
+    width:66px;height:66px;border-radius:50%;
     background:var(--accent);
     display:flex;align-items:center;justify-content:center;
     overflow:hidden;
-    box-shadow:0 0 0 2px var(--felt);
+    box-shadow:0 0 0 3px #cbbfa8, 0 0 0 4px var(--felt);
   }
   .label img{width:100%;height:100%;object-fit:cover;}
   .spindle{
@@ -316,15 +326,35 @@
       <div class="plinth">
         <div class="platter">
           <div class="record" id="record">
+            <svg class="groove-text" viewBox="0 0 220 220">
+              <path id="textArc" d="M 110,110 m -84,0 a 84,84 0 1,1 168,0 a 84,84 0 1,1 -168,0" fill="none"/>
+              <text>
+                <textPath id="trackArcText" href="#textArc" startOffset="2%">Pick a record to begin</textPath>
+              </text>
+            </svg>
             <div class="spindle"></div>
             <div class="label" id="recordLabel"></div>
           </div>
         </div>
         <div class="tonearm" id="tonearm">
           <svg viewBox="0 0 110 110">
-            <circle cx="88" cy="22" r="9" fill="var(--brass)"/>
-            <rect x="14" y="17" width="76" height="6" rx="3" fill="var(--brass-light)" transform="rotate(3 88 22)"/>
-            <circle cx="16" cy="22" r="5" fill="var(--felt)" stroke="var(--brass)" stroke-width="2"/>
+            <defs>
+              <linearGradient id="armGrad" x1="0" y1="0" x2="1" y2="1">
+                <stop offset="0%" stop-color="#efe9de"/>
+                <stop offset="50%" stop-color="#a49a89"/>
+                <stop offset="100%" stop-color="#efe9de"/>
+              </linearGradient>
+            </defs>
+            <circle cx="88" cy="22" r="10" fill="url(#armGrad)"/>
+            <circle cx="88" cy="22" r="4" fill="var(--felt)"/>
+            <rect x="14" y="18" width="76" height="5" rx="2.5" fill="url(#armGrad)" transform="rotate(3 88 22)"/>
+            <g transform="rotate(3 88 22)">
+              <rect x="8" y="12" width="19" height="17" rx="2" fill="var(--felt)"/>
+              <rect x="8" y="12" width="19" height="5" rx="2" fill="#cfc9bd"/>
+              <circle cx="12.5" cy="15" r="1" fill="#8a8378"/>
+              <circle cx="22.5" cy="15" r="1" fill="#8a8378"/>
+              <line x1="10" y1="29" x2="6" y2="35" stroke="var(--felt)" stroke-width="2"/>
+            </g>
           </svg>
         </div>
       </div>
@@ -379,6 +409,7 @@ const crate = document.getElementById('crate');
 const crateHeading = document.getElementById('crateHeading');
 const recordEl = document.getElementById('record');
 const recordLabel = document.getElementById('recordLabel');
+const trackArcText = document.getElementById('trackArcText');
 const tonearm = document.getElementById('tonearm');
 const nowPlaying = document.getElementById('nowPlaying');
 const playBtn = document.getElementById('playBtn');
@@ -543,6 +574,7 @@ function initPlayer(){
       if(track){
         nowPlaying.querySelector('.track').textContent = track.name;
         nowPlaying.querySelector('.artist').textContent = track.artists.map(a=>a.name).join(', ');
+        trackArcText.textContent = track.name + '  ♥  ' + track.artists.map(a=>a.name).join(', ') + '  ♥  ';
       }
     });
 
@@ -566,6 +598,7 @@ async function playLikedSongs(sleeveEl){
   recordLabel.innerHTML = '💚';
   recordLabel.style.fontSize = '28px';
   recordEl.classList.add('on');
+  trackArcText.textContent = 'Liked Songs  ♥  ';
   nowPlaying.querySelector('.track').textContent = 'Liked Songs';
   nowPlaying.querySelector('.artist').textContent = 'Dropping the needle…';
 
@@ -594,6 +627,7 @@ async function playPlaylist(pl, sleeveEl, img){
   recordLabel.style.fontSize = '';
   recordLabel.innerHTML = img ? `<img src="${img}" alt="">` : '';
   recordEl.classList.add('on');
+  trackArcText.textContent = pl.name + '  ♥  ';
   nowPlaying.querySelector('.track').textContent = pl.name;
   nowPlaying.querySelector('.artist').textContent = 'Dropping the needle…';
 
@@ -619,4 +653,4 @@ const savedClientId = sessionStorage.getItem('vinyl_client_id');
 if(savedClientId) document.getElementById('clientId').value = savedClientId;
 </script>
 </body>
-</html>
+</html>git add vinyl-spotify.html
