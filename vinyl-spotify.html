@@ -5,37 +5,87 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Crate — your Spotify, on vinyl</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Caveat:wght@500;600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
   :root{
-    --walnut:#241812;
-    --walnut-2:#3a2a1e;
+    --bg-1:#f7ebda;
+    --bg-2:#ecd3ac;
+    --wood:#a9754a;
+    --wood-dark:#7c5535;
+    --plank:#8f6440;
+    --ink:#3b2417;
+    --cream:#fff8ed;
+    --accent:#c97b4a;
+    --accent-2:#8b5e34;
     --brass:#b3874b;
-    --brass-light:#d9b27c;
+    --brass-light:#8b5e34;
+    --felt:#17110c;
+    --card-bg:rgba(255,255,255,0.4);
+    --card-border:rgba(139,94,52,0.25);
+    --steam:rgba(255,255,255,0.55);
+    --shadow:rgba(90,58,30,0.25);
+    --btn-text:#2b1c14;
+    color-scheme:light;
+    transition:background .6s ease;
+  }
+  html[data-theme="evening"]{
+    --bg-1:#2b1c14;
+    --bg-2:#17100b;
+    --wood:#3a2a1e;
+    --wood-dark:#1c130d;
+    --plank:#2f2117;
+    --ink:#f2e9d8;
     --cream:#f2e9d8;
-    --rust:#9c4a34;
-    --felt:#20291f;
-    --ink:#161210;
+    --accent:#d98e4a;
+    --accent-2:#b3874b;
+    --brass:#d9b27c;
+    --brass-light:#e8c99a;
+    --felt:#0c0a09;
+    --card-bg:rgba(0,0,0,0.25);
+    --card-border:rgba(217,142,74,0.25);
+    --steam:rgba(242,233,216,0.35);
+    --shadow:rgba(0,0,0,0.45);
+    color-scheme:dark;
   }
   *{box-sizing:border-box;}
   body{
     margin:0;
-    background: radial-gradient(ellipse at top, var(--walnut-2), var(--walnut) 70%);
-    color:var(--cream);
+    background:
+      radial-gradient(ellipse 900px 500px at 50% -10%, var(--bg-1), transparent),
+      linear-gradient(180deg, var(--bg-1), var(--bg-2) 60%);
+    color:var(--ink);
     font-family:'Inter',sans-serif;
     min-height:100vh;
     padding:48px 20px 80px;
+    transition:background .6s ease, color .6s ease;
   }
-  .wrap{max-width:760px;margin:0 auto;}
+  .wrap{max-width:760px;margin:0 auto;position:relative;}
+  .mode-toggle{
+    position:fixed;top:20px;right:20px;
+    width:46px;height:46px;border-radius:50%;
+    background:var(--card-bg);
+    border:1px solid var(--card-border);
+    display:flex;align-items:center;justify-content:center;
+    font-size:19px;cursor:pointer;
+    backdrop-filter:blur(6px);
+    z-index:10;
+  }
+  .greeting{
+    font-family:'Caveat',cursive;
+    font-size:22px;
+    color:var(--accent);
+    margin:0 0 2px;
+  }
   h1{
     font-family:'Fraunces',serif;
     font-weight:600;
     font-size:clamp(32px,5vw,48px);
     margin:0 0 6px;
     letter-spacing:-0.01em;
+    color:var(--ink);
   }
   .sub{
-    color:var(--brass-light);
+    color:var(--accent-2);
     font-size:15px;
     margin:0 0 40px;
     max-width:46ch;
@@ -44,18 +94,19 @@
 
   /* ---- Setup card ---- */
   .card{
-    background:rgba(0,0,0,0.22);
-    border:1px solid rgba(179,135,75,0.25);
+    background:var(--card-bg);
+    border:1px solid var(--card-border);
     border-radius:14px;
     padding:28px;
     margin-bottom:32px;
+    backdrop-filter:blur(6px);
   }
-  .card h2{font-family:'Fraunces',serif;font-weight:600;font-size:20px;margin:0 0 14px;}
-  label{display:block;font-size:13px;color:var(--brass-light);margin-bottom:6px;}
+  .card h2{font-family:'Fraunces',serif;font-weight:600;font-size:20px;margin:0 0 14px;color:var(--ink);}
+  label{display:block;font-size:13px;color:var(--accent-2);margin-bottom:6px;}
   input[type=text]{
     width:100%;
-    background:var(--ink);
-    border:1px solid rgba(179,135,75,0.3);
+    background:var(--felt);
+    border:1px solid var(--card-border);
     color:var(--cream);
     padding:11px 13px;
     border-radius:8px;
@@ -63,10 +114,10 @@
     font-family:inherit;
     margin-bottom:16px;
   }
-  input[type=text]:focus{outline:2px solid var(--brass);outline-offset:1px;}
-  .hint{font-size:12.5px;color:#c9b89a;line-height:1.6;margin:0 0 16px;}
-  .hint code{background:rgba(179,135,75,0.15);padding:1px 5px;border-radius:4px;}
-  .hint a{color:var(--brass-light);}
+  input[type=text]:focus{outline:2px solid var(--accent);outline-offset:1px;}
+  .hint{font-size:12.5px;color:var(--accent-2);line-height:1.6;margin:0 0 16px;}
+  .hint code{background:rgba(139,94,52,0.15);padding:1px 5px;border-radius:4px;}
+  .hint a{color:var(--accent);}
   button{
     font-family:'Inter',sans-serif;
     font-weight:600;
@@ -77,27 +128,57 @@
     cursor:pointer;
     transition:transform .15s ease;
   }
-  button:focus-visible{outline:2px solid var(--brass-light);outline-offset:2px;}
+  button:focus-visible{outline:2px solid var(--accent);outline-offset:2px;}
   button:active{transform:scale(0.97);}
-  .btn-primary{background:var(--brass);color:var(--ink);}
+  .btn-primary{background:var(--accent);color:var(--btn-text);}
   .btn-primary:hover{background:var(--brass-light);}
   .btn-primary:disabled{opacity:0.4;cursor:not-allowed;}
-  .status{font-size:13px;color:#c9b89a;margin-top:10px;min-height:16px;}
+  .status{font-size:13px;color:var(--accent-2);margin-top:10px;min-height:16px;}
 
   /* ---- Turntable ---- */
   .deck{
     display:none;
-    background:linear-gradient(160deg,#2f2117,#1c130d);
+    position:relative;
+    background:
+      repeating-linear-gradient(90deg, rgba(0,0,0,0.05) 0 2px, transparent 2px 90px),
+      linear-gradient(160deg, var(--plank), var(--wood-dark));
     border-radius:18px;
     padding:36px 28px 28px;
-    border:1px solid rgba(179,135,75,0.25);
-    box-shadow:0 20px 50px rgba(0,0,0,0.4);
+    border:1px solid var(--card-border);
+    box-shadow:0 20px 50px var(--shadow);
+    overflow:hidden;
   }
   .deck.show{display:block;}
+  .scene{
+    display:flex;
+    align-items:flex-end;
+    justify-content:center;
+    gap:22px;
+    margin-bottom:22px;
+  }
+  .mug{width:64px;flex-shrink:0;padding-bottom:6px;}
+  .mug svg{width:100%;overflow:visible;}
+  .steam path{
+    stroke:var(--steam);
+    stroke-width:3;
+    stroke-linecap:round;
+    fill:none;
+    opacity:0;
+    transform-origin:bottom center;
+    animation:steam 3.6s ease-in infinite;
+  }
+  .steam path:nth-child(2){animation-delay:.8s;}
+  .steam path:nth-child(3){animation-delay:1.6s;}
+  @keyframes steam{
+    0%{opacity:0;transform:translateY(0) scaleY(0.8);}
+    15%{opacity:.9;}
+    75%{opacity:.2;}
+    100%{opacity:0;transform:translateY(-22px) scaleY(1.15);}
+  }
   .plinth{
     position:relative;
     width:220px;height:220px;
-    margin:0 auto 22px;
+    flex-shrink:0;
   }
   .platter{
     width:220px;height:220px;
@@ -123,17 +204,17 @@
   @keyframes spin{to{transform:rotate(360deg);}}
   .label{
     width:70px;height:70px;border-radius:50%;
-    background:var(--rust);
+    background:var(--accent);
     display:flex;align-items:center;justify-content:center;
     overflow:hidden;
-    box-shadow:0 0 0 2px var(--ink);
+    box-shadow:0 0 0 2px var(--felt);
   }
   .label img{width:100%;height:100%;object-fit:cover;}
   .spindle{
     position:absolute;top:50%;left:50%;
     width:8px;height:8px;background:var(--brass-light);
     border-radius:50%;transform:translate(-50%,-50%);
-    box-shadow:0 0 0 1px var(--ink);
+    box-shadow:0 0 0 1px var(--felt);
   }
   .tonearm{
     position:absolute;
@@ -151,25 +232,26 @@
     text-align:center;
     margin-bottom:22px;
   }
-  .now .track{font-family:'Fraunces',serif;font-size:19px;font-weight:600;}
-  .now .artist{font-size:13.5px;color:var(--brass-light);margin-top:2px;}
+  .now .track{font-family:'Fraunces',serif;font-size:19px;font-weight:600;color:var(--cream);}
+  .now .artist{font-size:13.5px;color:var(--brass);margin-top:2px;}
   .transport{display:flex;justify-content:center;gap:14px;margin-bottom:8px;}
   .icon-btn{
     width:44px;height:44px;border-radius:50%;
-    background:rgba(179,135,75,0.15);
-    border:1px solid rgba(179,135,75,0.3);
+    background:rgba(255,255,255,0.1);
+    border:1px solid rgba(255,255,255,0.15);
     color:var(--cream);
     display:flex;align-items:center;justify-content:center;
     cursor:pointer;
     font-size:16px;
   }
-  .icon-btn:hover{background:rgba(179,135,75,0.28);}
+  .icon-btn:hover{background:rgba(255,255,255,0.18);}
 
   /* ---- Crate ---- */
   .crate-heading{
     font-family:'Fraunces',serif;
     font-size:18px;font-weight:600;
     margin:34px 0 14px;
+    color:var(--ink);
   }
   .crate{
     display:grid;
@@ -177,25 +259,28 @@
     gap:14px;
   }
   .sleeve{
-    background:var(--felt);
-    border:1px solid rgba(179,135,75,0.2);
+    background:var(--card-bg);
+    border:1px solid var(--card-border);
     border-radius:10px;
     padding:10px;
     cursor:pointer;
     text-align:left;
     transition:transform .15s ease, border-color .15s ease;
+    backdrop-filter:blur(4px);
   }
-  .sleeve:hover{transform:translateY(-3px);border-color:var(--brass);}
-  .sleeve.active{border-color:var(--brass-light);box-shadow:0 0 0 1px var(--brass-light);}
-  .sleeve img{width:100%;aspect-ratio:1;object-fit:cover;border-radius:6px;margin-bottom:8px;background:#0c0a09;}
-  .sleeve .name{font-size:13px;font-weight:600;line-height:1.3;}
-  .sleeve .count{font-size:11.5px;color:#a3927a;margin-top:2px;}
+  .sleeve:hover{transform:translateY(-3px);border-color:var(--accent);}
+  .sleeve.active{border-color:var(--accent);box-shadow:0 0 0 1px var(--accent);}
+  .sleeve img{width:100%;aspect-ratio:1;object-fit:cover;border-radius:6px;margin-bottom:8px;background:var(--felt);}
+  .sleeve .name{font-size:13px;font-weight:600;line-height:1.3;color:var(--ink);}
+  .sleeve .count{font-size:11.5px;color:var(--accent-2);margin-top:2px;}
 
-  .empty{color:#a3927a;font-size:13.5px;}
+  .empty{color:var(--accent-2);font-size:13.5px;}
 </style>
 </head>
 <body>
+<button class="mode-toggle" id="modeToggle" title="Toggle morning/evening" aria-label="Toggle morning or evening mode">☀️</button>
 <div class="wrap">
+  <p class="greeting" id="greeting">good morning</p>
   <h1>Crate</h1>
   <p class="sub">Your Spotify playlists, reimagined as a record collection. Pick a sleeve, drop the needle.</p>
 
@@ -215,19 +300,33 @@
   </div>
 
   <div class="deck" id="deck">
-    <div class="plinth">
-      <div class="platter">
-        <div class="record" id="record">
-          <div class="spindle"></div>
-          <div class="label" id="recordLabel"></div>
-        </div>
-      </div>
-      <div class="tonearm" id="tonearm">
-        <svg viewBox="0 0 110 110">
-          <circle cx="88" cy="22" r="9" fill="var(--brass)"/>
-          <rect x="14" y="17" width="76" height="6" rx="3" fill="var(--brass-light)" transform="rotate(3 88 22)"/>
-          <circle cx="16" cy="22" r="5" fill="var(--ink)" stroke="var(--brass)" stroke-width="2"/>
+    <div class="scene">
+      <div class="mug">
+        <svg viewBox="0 0 70 90">
+          <g class="steam">
+            <path d="M20 46 C 14 38, 26 32, 20 24 C 14 16, 26 10, 22 2"/>
+            <path d="M35 46 C 29 38, 41 32, 35 24 C 29 16, 41 10, 37 2"/>
+            <path d="M50 46 C 44 38, 56 32, 50 24 C 44 16, 56 10, 52 2"/>
+          </g>
+          <path d="M8 48 h50 l-5 30 a6 6 0 0 1-6 5 H19 a6 6 0 0 1-6-5 Z" fill="var(--accent-2)"/>
+          <path d="M8 48 h50 l-1.5 9 h-47 Z" fill="var(--accent)"/>
+          <path d="M58 54 q14 2 12 16 q-2 12 -14 10" fill="none" stroke="var(--accent-2)" stroke-width="5"/>
         </svg>
+      </div>
+      <div class="plinth">
+        <div class="platter">
+          <div class="record" id="record">
+            <div class="spindle"></div>
+            <div class="label" id="recordLabel"></div>
+          </div>
+        </div>
+        <div class="tonearm" id="tonearm">
+          <svg viewBox="0 0 110 110">
+            <circle cx="88" cy="22" r="9" fill="var(--brass)"/>
+            <rect x="14" y="17" width="76" height="6" rx="3" fill="var(--brass-light)" transform="rotate(3 88 22)"/>
+            <circle cx="16" cy="22" r="5" fill="var(--felt)" stroke="var(--brass)" stroke-width="2"/>
+          </svg>
+        </div>
       </div>
     </div>
     <div class="now" id="nowPlaying">
@@ -247,6 +346,22 @@
 
 <script src="https://sdk.scdn.co/spotify-player.js"></script>
 <script>
+/* ---------- morning/evening mode ---------- */
+const modeToggle = document.getElementById('modeToggle');
+const greeting = document.getElementById('greeting');
+let theme = (new Date().getHours() >= 6 && new Date().getHours() < 18) ? 'morning' : 'evening';
+
+function applyTheme(){
+  document.documentElement.setAttribute('data-theme', theme);
+  modeToggle.textContent = theme === 'morning' ? '☀️' : '🌙';
+  greeting.textContent = theme === 'morning' ? 'good morning ☕' : 'good evening ☕';
+}
+modeToggle.addEventListener('click', ()=>{
+  theme = theme === 'morning' ? 'evening' : 'morning';
+  applyTheme();
+});
+applyTheme();
+
 /* ---------- config ---------- */
 const REDIRECT_URI = location.origin + location.pathname;
 document.getElementById('redirectDisplay').textContent = REDIRECT_URI;
