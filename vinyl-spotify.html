@@ -253,7 +253,8 @@ document.getElementById('redirectDisplay').textContent = REDIRECT_URI;
 const SCOPES = [
   'streaming','user-read-email','user-read-private',
   'user-read-playback-state','user-modify-playback-state',
-  'playlist-read-private','playlist-read-collaborative'
+  'playlist-read-private','playlist-read-collaborative',
+  'user-library-read'
 ].join(' ');
 
 const statusMsg = document.getElementById('statusMsg');
@@ -358,21 +359,31 @@ function startApp(){
 }
 
 async function loadPlaylists(){
-  crate.innerHTML = '<p class="empty">Pulling your playlists…</p>';
-  const res = await fetch('https://api.spotify.com/v1/me/playlists?limit=30',{
-    headers:{Authorization:'Bearer '+accessToken}
-  });
-  const data = await res.json();
-  if(!data.items || !data.items.length){
-    crate.innerHTML = '<p class="empty">No playlists found on this account.</p>';
-    return;
-  }
+  crate.innerHTML = '<p class="empty">Pulling your music…</p>';
+
+  const [playlistsRes, likedRes] = await Promise.all([
+    fetch('https://api.spotify.com/v1/me/playlists?limit=30',{headers:{Authorization:'Bearer '+accessToken}}),
+    fetch('https://api.spotify.com/v1/me/tracks?limit=1',{headers:{Authorization:'Bearer '+accessToken}})
+  ]);
+  const playlistsData = await playlistsRes.json();
+  const likedData = await likedRes.json();
+
   crate.innerHTML='';
-  const validPlaylists = data.items.filter(pl => pl && pl.tracks);
-  if(!validPlaylists.length){
-    crate.innerHTML = '<p class="empty">No playable playlists found on this account.</p>';
-    return;
+
+  // Liked Songs first, since Spotify doesn't include it in /me/playlists at all
+  if(likedData.total > 0){
+    const div = document.createElement('div');
+    div.className='sleeve';
+    div.innerHTML = `
+      <img src="" alt="" style="visibility:hidden">
+      <div class="name">💚 Liked Songs</div>
+      <div class="count">${likedData.total} tracks</div>
+    `;
+    div.addEventListener('click', ()=>playLikedSongs(div));
+    crate.appendChild(div);
   }
+
+  const validPlaylists = (playlistsData.items || []).filter(pl => pl && pl.tracks);
   validPlaylists.forEach(pl=>{
     const img = pl.images && pl.images[0] ? pl.images[0].url : '';
     const div = document.createElement('div');
@@ -385,6 +396,10 @@ async function loadPlaylists(){
     div.addEventListener('click', ()=>playPlaylist(pl, div, img));
     crate.appendChild(div);
   });
+
+  if(!validPlaylists.length && !(likedData.total > 0)){
+    crate.innerHTML = '<p class="empty">No playlists or liked songs found on this account.</p>';
+  }
 }
 
 let spotifySdkReady = false;
@@ -430,9 +445,38 @@ function initPlayer(){
   }
 }
 
+async function playLikedSongs(sleeveEl){
+  document.querySelectorAll('.sleeve').forEach(s=>s.classList.remove('active'));
+  sleeveEl.classList.add('active');
+  recordLabel.innerHTML = '💚';
+  recordLabel.style.fontSize = '28px';
+  recordEl.classList.add('on');
+  nowPlaying.querySelector('.track').textContent = 'Liked Songs';
+  nowPlaying.querySelector('.artist').textContent = 'Dropping the needle…';
+
+  if(!deviceId){
+    statusMsg.textContent = 'Player still connecting — try again in a second.';
+    return;
+  }
+
+  const res = await fetch('https://api.spotify.com/v1/me/tracks?limit=50',{
+    headers:{Authorization:'Bearer '+accessToken}
+  });
+  const data = await res.json();
+  const uris = (data.items || []).filter(it => it && it.track).map(it => it.track.uri);
+  if(!uris.length) return;
+
+  await fetch(`https://api.spotify.com/v1/me/player/play?device_id=${deviceId}`,{
+    method:'PUT',
+    headers:{Authorization:'Bearer '+accessToken,'Content-Type':'application/json'},
+    body: JSON.stringify({uris})
+  });
+}
+
 async function playPlaylist(pl, sleeveEl, img){
   document.querySelectorAll('.sleeve').forEach(s=>s.classList.remove('active'));
   sleeveEl.classList.add('active');
+  recordLabel.style.fontSize = '';
   recordLabel.innerHTML = img ? `<img src="${img}" alt="">` : '';
   recordEl.classList.add('on');
   nowPlaying.querySelector('.track').textContent = pl.name;
