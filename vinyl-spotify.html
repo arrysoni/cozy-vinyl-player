@@ -8,14 +8,14 @@
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Caveat:wght@500;600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
   :root{
-    --bg-1:#e8ddcb;
-    --bg-2:#d2bf9f;
+    --bg-1:#efe2c9;
+    --bg-2:#d8c19a;
     --wood:#cdbfa8;
     --wood-dark:#a89477;
     --plank:#c3b295;
     --ink:#3b2b1c;
     --cream:#fdf6ea;
-    --accent:#8a5a34;
+    --accent:#a3672f;
     --accent-2:#6b4a30;
     --brass:#b3874b;
     --brass-light:#8b5e34;
@@ -24,27 +24,48 @@
     --card-border:rgba(107,74,48,0.25);
     --steam:rgba(255,255,255,0.55);
     --shadow:rgba(90,58,30,0.25);
+    --flame:#f0a94e;
     --btn-text:#2b1c14;
     color-scheme:light;
-    transition:background .6s ease;
   }
-  html[data-theme="evening"]{
-    --bg-1:#2b1c14;
-    --bg-2:#17100b;
-    --wood:#3a2a1e;
-    --wood-dark:#1c130d;
-    --plank:#2f2117;
-    --ink:#f2e9d8;
-    --cream:#f2e9d8;
-    --accent:#d98e4a;
-    --accent-2:#b3874b;
-    --brass:#d9b27c;
-    --brass-light:#e8c99a;
-    --felt:#0c0a09;
-    --card-bg:rgba(0,0,0,0.25);
-    --card-border:rgba(217,142,74,0.25);
-    --steam:rgba(242,233,216,0.35);
-    --shadow:rgba(0,0,0,0.45);
+  html[data-theme="dawn"]{
+    --bg-1:#5b6a86; --bg-2:#2c3348; --wood:#4a4a52; --wood-dark:#24222a;
+    --plank:#41414a; --ink:#eef0f5; --cream:#eef0f5;
+    --accent:#c9a45e; --accent-2:#9b8256; --brass:#c3ad7c; --brass-light:#ddc99a;
+    --felt:#0c0a0d; --card-bg:rgba(20,22,32,0.35); --card-border:rgba(201,164,94,0.25);
+    --steam:rgba(238,240,245,0.4); --shadow:rgba(0,0,0,0.45); --flame:#f0a94e;
+    color-scheme:dark;
+  }
+  html[data-theme="morning"]{
+    --bg-1:#f2e6cc; --bg-2:#dcc79c; --wood:#c9b48c; --wood-dark:#9d8560;
+    --plank:#c3ac82; --ink:#3b2b1c; --cream:#fffaf0;
+    --accent:#b17636; --accent-2:#7c5a34; --brass:#b3874b; --brass-light:#8b5e34;
+    --felt:#150e08; --card-bg:rgba(255,255,255,0.45); --card-border:rgba(124,90,52,0.25);
+    --steam:rgba(255,255,255,0.6); --shadow:rgba(90,58,30,0.2); --flame:#f4b45e;
+    color-scheme:light;
+  }
+  html[data-theme="afternoon"]{
+    --bg-1:#eaf1f5; --bg-2:#c9dce6; --wood:#8a6a4c; --wood-dark:#5f4630;
+    --plank:#7f6146; --ink:#2c2116; --cream:#fffdf8;
+    --accent:#9c5a2c; --accent-2:#6b4326; --brass:#b3874b; --brass-light:#8b5e34;
+    --felt:#150e08; --card-bg:rgba(255,255,255,0.5); --card-border:rgba(107,67,38,0.25);
+    --steam:rgba(255,255,255,0.6); --shadow:rgba(50,50,60,0.2); --flame:#f4b45e;
+    color-scheme:light;
+  }
+  html[data-theme="dusk"]{
+    --bg-1:#6b4a5a; --bg-2:#2e2233; --wood:#4a3327; --wood-dark:#241811;
+    --plank:#40291f; --ink:#f5e9df; --cream:#f5e9df;
+    --accent:#e08a4f; --accent-2:#b3874b; --brass:#d9a668; --brass-light:#eec38e;
+    --felt:#0c0806; --card-bg:rgba(20,12,16,0.35); --card-border:rgba(224,138,79,0.28);
+    --steam:rgba(245,233,223,0.4); --shadow:rgba(0,0,0,0.5); --flame:#e8873f;
+    color-scheme:dark;
+  }
+  html[data-theme="night"]{
+    --bg-1:#241c30; --bg-2:#100c17; --wood:#2b2530; --wood-dark:#141018;
+    --plank:#241f29; --ink:#e9e3f0; --cream:#e9e3f0;
+    --accent:#c99a5b; --accent-2:#8f6f45; --brass:#c3ad7c; --brass-light:#e8c99a;
+    --felt:#08060a; --card-bg:rgba(10,8,16,0.4); --card-border:rgba(201,154,91,0.22);
+    --steam:rgba(233,227,240,0.35); --shadow:rgba(0,0,0,0.55); --flame:#e8873f;
     color-scheme:dark;
   }
   *{box-sizing:border-box;}
@@ -259,6 +280,21 @@
   }
   .icon-btn:hover{background:rgba(255,255,255,0.18);}
 
+  .candle{position:absolute;width:20px;pointer-events:none;}
+  .candle.c1{left:6px;bottom:8px;}
+  .candle.c2{right:10px;bottom:14px;width:16px;}
+  .candle svg{width:100%;overflow:visible;}
+  .flame{
+    transform-origin:bottom center;
+    animation:flicker 2.6s ease-in-out infinite;
+  }
+  @keyframes flicker{
+    0%,100%{transform:scaleY(1) rotate(0deg);opacity:1;}
+    25%{transform:scaleY(1.08) rotate(-2deg);opacity:.92;}
+    50%{transform:scaleY(0.94) rotate(2deg);opacity:1;}
+    75%{transform:scaleY(1.05) rotate(-1deg);opacity:.95;}
+  }
+
   /* ---- Crate ---- */
   .crate-heading{
     font-family:'Fraunces',serif;
@@ -266,10 +302,20 @@
     margin:34px 0 14px;
     color:var(--ink);
   }
+  .crate-basket{
+    background:
+      repeating-linear-gradient(45deg, rgba(0,0,0,0.08) 0 3px, transparent 3px 9px),
+      repeating-linear-gradient(-45deg, rgba(0,0,0,0.06) 0 3px, transparent 3px 9px),
+      linear-gradient(160deg, #b98f5e, #8a6238);
+    border-radius:16px;
+    padding:16px;
+    border:1px solid rgba(0,0,0,0.15);
+    box-shadow:inset 0 2px 6px rgba(0,0,0,0.25), 0 10px 24px var(--shadow);
+  }
   .crate{
     display:grid;
     grid-template-columns:repeat(auto-fill,minmax(140px,1fr));
-    gap:14px;
+    gap:12px;
   }
   .sleeve{
     background:var(--card-bg);
@@ -284,10 +330,10 @@
   .sleeve:hover{transform:translateY(-3px);border-color:var(--accent);}
   .sleeve.active{border-color:var(--accent);box-shadow:0 0 0 1px var(--accent);}
   .sleeve img{width:100%;aspect-ratio:1;object-fit:cover;border-radius:6px;margin-bottom:8px;background:var(--felt);}
-  .sleeve .name{font-size:13px;font-weight:600;line-height:1.3;color:var(--ink);}
-  .sleeve .count{font-size:11.5px;color:var(--accent-2);margin-top:2px;}
+  .sleeve .name{font-size:13px;font-weight:600;line-height:1.3;color:var(--cream);}
+  .sleeve .count{font-size:11.5px;color:var(--cream);opacity:0.7;margin-top:2px;}
 
-  .empty{color:var(--accent-2);font-size:13.5px;}
+  .empty{color:var(--cream);opacity:0.75;font-size:13.5px;}
 </style>
 </head>
 <body>
@@ -313,6 +359,20 @@
   </div>
 
   <div class="deck" id="deck">
+    <div class="candle c1">
+      <svg viewBox="0 0 20 50">
+        <rect x="4" y="14" width="12" height="36" rx="2" fill="var(--cream)" opacity="0.9"/>
+        <ellipse class="flame" cx="10" cy="8" rx="4" ry="8" fill="var(--flame)"/>
+        <ellipse class="flame" cx="10" cy="9" rx="2" ry="4.5" fill="#fff3d6" opacity="0.85"/>
+      </svg>
+    </div>
+    <div class="candle c2">
+      <svg viewBox="0 0 20 50">
+        <rect x="4" y="20" width="12" height="30" rx="2" fill="var(--cream)" opacity="0.9"/>
+        <ellipse class="flame" cx="10" cy="14" rx="3.5" ry="7" fill="var(--flame)"/>
+        <ellipse class="flame" cx="10" cy="15" rx="1.8" ry="4" fill="#fff3d6" opacity="0.85"/>
+      </svg>
+    </div>
     <div class="scene">
       <div class="mug">
         <svg viewBox="0 0 70 90">
@@ -374,23 +434,42 @@
   </div>
 
   <div class="crate-heading" id="crateHeading" style="display:none;">Your crate</div>
-  <div class="crate" id="crate"></div>
+  <div class="crate-basket">
+    <div class="crate" id="crate"></div>
+  </div>
 </div>
 
 <script src="https://sdk.scdn.co/spotify-player.js"></script>
 <script>
-/* ---------- morning/evening mode ---------- */
+/* ---------- time-of-day mode ---------- */
 const modeToggle = document.getElementById('modeToggle');
 const greeting = document.getElementById('greeting');
-let theme = (new Date().getHours() >= 6 && new Date().getHours() < 18) ? 'morning' : 'evening';
+const PERIODS = [
+  { key:'dawn',      icon:'🌅', label:'dawn',      hours:[5,7]   },
+  { key:'morning',   icon:'☀️', label:'morning',   hours:[7,12]  },
+  { key:'afternoon', icon:'🌤️', label:'afternoon', hours:[12,17] },
+  { key:'dusk',      icon:'🌇', label:'dusk',      hours:[17,19] },
+  { key:'night',     icon:'🌙', label:'night',     hours:[19,29] } // wraps past midnight
+];
+function periodForHour(h){
+  const hh = h < 5 ? h + 24 : h; // treat 0-4am as continuation of night
+  return PERIODS.find(p => hh >= p.hours[0] && hh < p.hours[1]) || PERIODS[4];
+}
+let periodIndex = PERIODS.indexOf(periodForHour(new Date().getHours()));
 
 function applyTheme(){
-  document.documentElement.setAttribute('data-theme', theme);
-  modeToggle.textContent = theme === 'morning' ? '☀️' : '🌙';
-  greeting.textContent = theme === 'morning' ? 'good morning ☕' : 'good evening ☕';
+  const p = PERIODS[periodIndex];
+  document.documentElement.setAttribute('data-theme', p.key);
+  modeToggle.textContent = p.icon;
+  modeToggle.title = 'Time of day: ' + p.label + ' (click to change)';
+  const greetings = {
+    dawn:'early start ☕', morning:'good morning ☕', afternoon:'good afternoon ☕',
+    dusk:'good evening ☕', night:'still up? ☕'
+  };
+  greeting.textContent = greetings[p.key];
 }
 modeToggle.addEventListener('click', ()=>{
-  theme = theme === 'morning' ? 'evening' : 'morning';
+  periodIndex = (periodIndex + 1) % PERIODS.length;
   applyTheme();
 });
 applyTheme();
