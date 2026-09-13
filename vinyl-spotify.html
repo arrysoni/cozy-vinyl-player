@@ -3,31 +3,17 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Crate — your Spotify, on vinyl</title>
+<title>Crate — a quiet moment with your Spotify</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Caveat:wght@500;600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
   :root{
-    --bg-1:#efe2c9;
-    --bg-2:#d8c19a;
-    --wood:#cdbfa8;
-    --wood-dark:#a89477;
-    --plank:#c3b295;
-    --ink:#3b2b1c;
-    --cream:#fdf6ea;
-    --accent:#a3672f;
-    --accent-2:#6b4a30;
-    --brass:#b3874b;
-    --brass-light:#8b5e34;
-    --felt:#150e08;
-    --card-bg:rgba(255,255,255,0.4);
-    --card-border:rgba(107,74,48,0.25);
-    --steam:rgba(255,255,255,0.55);
-    --shadow:rgba(90,58,30,0.25);
-    --flame:#f0a94e;
-    --btn-text:#2b1c14;
-    --font-serif: 'Fraunces', serif;
-    --font-cursive: 'Caveat', cursive;
+    --bg-1:#efe2c9; --bg-2:#d8c19a; --wood:#cdbfa8; --wood-dark:#a89477; --plank:#c3b295;
+    --ink:#3b2b1c; --cream:#fdf6ea; --accent:#a3672f; --accent-2:#6b4a30;
+    --brass:#b3874b; --brass-light:#8b5e34; --felt:#150e08;
+    --card-bg:rgba(255,255,255,0.4); --card-border:rgba(107,74,48,0.25);
+    --steam:rgba(255,255,255,0.55); --shadow:rgba(90,58,30,0.25);
+    --flame:#f0a94e; --btn-text:#2b1c14;
     color-scheme:light;
   }
   html[data-theme="dawn"]{
@@ -70,144 +56,148 @@
     --steam:rgba(233,227,240,0.35); --shadow:rgba(0,0,0,0.55); --flame:#e8873f;
     color-scheme:dark;
   }
+
   *{box-sizing:border-box;}
+  html,body{margin:0;min-height:100%;}
   body{
-    margin:0;
-    background:
-      radial-gradient(ellipse 1100px 700px at 50% 0%, rgba(255,255,255,0.12), transparent 60%),
-      repeating-linear-gradient(90deg, rgba(0,0,0,0.035) 0 2px, transparent 2px 70px),
-      linear-gradient(160deg, var(--plank), var(--wood-dark) 85%),
-      /* Fallback wood pattern */
-      repeating-linear-gradient(90deg, #cbbfaa 0 2px, transparent 2px 70px),
-      /* Advanced wood grain approximation */
-      repeating-linear-gradient(0deg, transparent 0 5%, rgba(0,0,0,0.015) 5% 10%, transparent 10% 20%),
-      repeating-linear-gradient(90deg, transparent 0 5%, rgba(0,0,0,0.015) 5% 10%, transparent 10% 20%),
-      linear-gradient(160deg, #cdbfa8, #a89477 85%);
-    color:var(--ink);
-    font-family:'Inter',sans-serif;
-    min-height:100vh;
-    padding:48px 20px 80px;
+    background:var(--wood-dark);
+    color:var(--cream);
+    font-family:'DM Sans',sans-serif;
     transition:background .6s ease, color .6s ease;
   }
-  .wrap{max-width:760px;margin:0 auto;position:relative;}
+
+  /* ---------------- ROOM ---------------- */
+  .room{
+    position:relative;
+    width:100%;
+    min-height:100vh;
+    overflow:hidden;
+    background:
+      radial-gradient(circle at 18% 30%, rgba(0,0,0,.18), transparent 34%),
+      radial-gradient(circle at 82% 75%, rgba(0,0,0,.14), transparent 30%),
+      linear-gradient(135deg, var(--plank) 0%, var(--wood-dark) 48%, var(--plank) 100%);
+    transition:background .6s ease;
+  }
+  .wood{
+    position:absolute;inset:0;opacity:.5;pointer-events:none;
+    background:
+      repeating-linear-gradient(6deg, transparent 0 52px, rgba(255,255,255,.02) 53px, transparent 55px),
+      linear-gradient(90deg, rgba(0,0,0,.14), transparent 35%, rgba(0,0,0,.1));
+  }
+  .vignette{
+    position:absolute;inset:0;pointer-events:none;
+    background:radial-gradient(circle, transparent 46%, var(--shadow) 100%);
+  }
+  .hint{
+    position:absolute;z-index:7;left:6vw;top:5vh;
+    font-family:'Cormorant Garamond',serif;font-style:italic;
+    font-size:15px;opacity:.55;letter-spacing:.05em;color:var(--cream);
+    margin:0;
+  }
+
   .mode-toggle{
-    position:fixed;top:22px;right:22px;
+    position:fixed;top:22px;right:22px;z-index:20;
     width:44px;height:44px;border-radius:50%;
     background:radial-gradient(circle at 32% 28%, #e8d9b8, var(--brass) 55%, #7a5a30 100%);
     border:none;
     display:flex;align-items:center;justify-content:center;
     font-size:17px;cursor:pointer;
     box-shadow:0 0 0 3px rgba(0,0,0,0.15), inset 0 1px 2px rgba(255,255,255,0.5), inset 0 -2px 4px rgba(0,0,0,0.35), 0 4px 10px rgba(0,0,0,0.35);
-    z-index:10;
     transition:transform .2s ease;
   }
   .mode-toggle:hover{transform:rotate(-12deg) scale(1.05);}
   .mode-toggle:active{transform:rotate(0deg) scale(0.95);}
-  .greeting{
-    font-family:var(--font-cursive);
-    font-size:22px;
-    color:var(--accent);
-    margin:0 0 2px;
-  }
-  h1{
-    font-family:var(--font-serif);
-    font-weight:600;
-    font-size:clamp(32px,5vw,48px);
-    margin:0 0 6px;
-    letter-spacing:-0.01em;
-    color:var(--cream);
-  }
-  .sub{
-    color:var(--cream);
-    opacity:0.75;
-    font-size:15px;
-    margin:0 0 40px;
-    max-width:46ch;
-    line-height:1.5;
-    font-family:var(--font-cursive);
-  }
 
-  /* ---- Setup, unboxed: sits right on the wood ---- */
-  .card{
-    padding:0;
-    margin-bottom:36px;
-    background:none;
-    border:none;
-    box-shadow:none;
+  /* ---------------- TURNTABLE ---------------- */
+  .turntable{
+    position:absolute;left:-7vw;top:6vh;
+    width:min(58vw,780px);height:min(58vw,780px);
+    min-width:440px;min-height:440px;
   }
-  .card h2{font-family:var(--font-serif);font-weight:600;font-size:20px;margin:0 0 14px;color:var(--cream);}
-  label{display:block;font-size:13px;color:var(--cream);opacity:0.7;margin-bottom:6px;}
-  input[type=text]{
-    width:100%;
-    background:transparent;
-    border:none;
-    border-bottom:1px solid rgba(255,255,255,0.3);
-    color:var(--cream);
-    padding:9px 2px;
-    border-radius:0;
-    font-size:14px;
-    font-family:inherit;
-    margin-bottom:16px;
+  .plinth{position:relative;width:100%;height:100%;}
+  .platter{
+    position:absolute;inset:0;border-radius:50%;
+    background:#5b5148;
+    box-shadow:0 35px 70px rgba(0,0,0,.35), inset 0 0 0 10px #3d352f, inset 0 0 0 12px #8d7c6a;
   }
-  input[type=text]:focus{outline:none;border-bottom-color:var(--accent);}
-  .hint{font-size:12.5px;color:var(--cream);opacity:0.65;line-height:1.6;margin:0 0 16px;}
-  .hint code{background:rgba(255,255,255,0.12);padding:1px 5px;border-radius:4px;}
-  .hint a{color:var(--brass-light);}
-  button{
-    font-family:'Inter',sans-serif;
-    font-weight:600;
-    font-size:14px;
-    border:none;
-    border-radius:6px;
-    padding:12px 24px;
-    cursor:pointer;
-    transition:transform .15s ease;
+  .inner-platter{
+    position:absolute;inset:3.6%;border-radius:50%;
+    background:radial-gradient(circle at 50% 50%, #1c130a 0 26%, #0e0904 27% 100%);
+    box-shadow:inset 0 0 0 2px rgba(255,255,255,.06);
   }
-  button:focus-visible{outline:2px solid var(--accent);outline-offset:2px;}
-  button:active{transform:scale(0.97);}
-  .btn-primary{
-    background:linear-gradient(160deg, #d9b982, var(--accent) 60%, #6b4a24);
-    color:var(--btn-text);
-    text-shadow:0 1px 0 rgba(255,255,255,0.25);
-    box-shadow:inset 0 1px 1px rgba(255,255,255,0.4), inset 0 -2px 3px rgba(0,0,0,0.3), 0 3px 8px rgba(0,0,0,0.3);
-    letter-spacing:0.02em;
+  .record{
+    position:absolute;inset:2.6%;border-radius:50%;
+    background-image:url('vinyl-record.jpg');
+    background-size:cover;background-position:center;
+    box-shadow:0 0 0 1px rgba(255,255,255,0.06), inset 0 0 40px rgba(0,0,0,0.4);
+    overflow:hidden;
+    opacity:0;transform:scale(0.93);
+    transition:opacity .4s ease, transform .4s ease;
   }
-  .btn-primary:hover{filter:brightness(1.08);}
-  .btn-primary:disabled{opacity:0.4;cursor:not-allowed;}
-  .status{font-size:13px;color:var(--cream);opacity:0.7;margin-top:10px;min-height:16px;}
-
-  /* ---- Turntable ---- */
-  .deck{
-    display:none;
-    position:relative;
-    padding:36px 8px 28px;
-    overflow:visible;
+  .record.on{opacity:1;transform:scale(1);}
+  .record.spin{animation:spin 3.6s linear infinite;}
+  @keyframes spin{to{transform:rotate(360deg);}}
+  .groove-text{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;}
+  .groove-text text{
+    font-family:'Cormorant Garamond',serif;font-style:italic;
+    font-size:11px;fill:var(--cream);opacity:0.75;letter-spacing:0.5px;
+  }
+  .label{
+    position:absolute;left:30%;top:56%;transform:translate(-50%,-50%);
+    width:15%;height:15%;border-radius:50%;
     background:
-      repeating-linear-gradient(90deg, rgba(0,0,0,0.035) 0 2px, transparent 2px 70px),
-      repeating-radial-gradient(circle at 10% 10%, rgba(255,255,255,0.015) 0 5%, transparent 5% 10%, rgba(0,0,0,0.01) 10% 15%, transparent 15% 20%),
-      linear-gradient(160deg, #b09a77, #7a6a52 85%),
-      repeating-linear-gradient(90deg, #cbbfaa 0 2px, transparent 2px 70px);
-    border-radius:18px;
-    box-shadow:inset 0 2px 4px rgba(255,255,255,0.08), inset 0 -4px 8px rgba(0,0,0,0.3), 0 14px 28px var(--shadow);
+      radial-gradient(circle at 40% 35%, rgba(255,255,255,0.35), transparent 45%),
+      repeating-radial-gradient(circle, rgba(0,0,0,0.05) 0 1px, transparent 1px 3px),
+      radial-gradient(circle, #d9b072, var(--accent) 70%);
+    display:flex;align-items:center;justify-content:center;overflow:hidden;
+    box-shadow:0 0 0 1px rgba(0,0,0,0.3), 0 0 0 3px #cbbfa8, 0 0 0 4px rgba(0,0,0,0.25), inset 0 1px 2px rgba(255,255,255,0.4);
   }
-  .deck.show{display:block;}
-  .scene{
-    display:flex;
-    align-items:flex-end;
-    justify-content:center;
-    gap:22px;
-    margin-bottom:22px;
+  .label img{width:100%;height:100%;object-fit:cover;border-radius:50%;}
+  .spindle{
+    position:absolute;top:56%;left:30%;
+    width:1.5%;height:1.5%;background:var(--brass-light);
+    border-radius:50%;transform:translate(-50%,-50%);
+    box-shadow:0 0 0 1px var(--felt);z-index:2;
   }
-  .mug{width:48px;flex-shrink:0;padding-bottom:4px;}
-  .mug svg{width:100%;overflow:visible;}
+  .tonearm{
+    position:absolute;top:-6%;right:-12.5%;
+    width:46%;height:46%;
+    transform-origin:80% 20%;
+    transform:rotate(-32deg);
+    transition:transform .6s cubic-bezier(.4,0,.2,1);
+    cursor:grab;touch-action:none;z-index:3;
+  }
+  .tonearm.down{transform:rotate(-8deg);}
+  .tonearm svg{width:100%;height:100%;overflow:visible;}
+
+  /* ---------------- CANDLE + MUG (real photos) ---------------- */
+  .candle-photo{
+    position:absolute;right:6vw;top:6vh;width:min(15vw,170px);min-width:90px;z-index:2;
+    border-radius:8px;overflow:hidden;
+    box-shadow:0 18px 30px rgba(0,0,0,.45);
+  }
+  .candle-photo img{width:100%;display:block;}
+  .candle-glow{
+    position:absolute;right:8vw;top:6vh;width:min(15vw,170px);min-width:90px;
+    aspect-ratio:1;border-radius:50%;
+    background:radial-gradient(circle, var(--flame), transparent 70%);
+    opacity:.3;filter:blur(30px);pointer-events:none;z-index:1;
+    animation:glowpulse 2.6s ease-in-out infinite;
+  }
+  @keyframes glowpulse{
+    0%,100%{opacity:.22;transform:scale(1);}
+    50%{opacity:.38;transform:scale(1.12);}
+  }
+  .mug-photo{
+    position:absolute;right:5vw;bottom:6vh;width:min(18vw,220px);min-width:120px;z-index:2;
+    border-radius:10px;overflow:hidden;
+    box-shadow:0 20px 32px rgba(0,0,0,.4);
+  }
+  .mug-photo img{width:100%;display:block;}
+  .steam{position:absolute;top:-6%;left:35%;width:34%;height:46%;pointer-events:none;}
   .steam path{
-    stroke:var(--steam);
-    stroke-width:3;
-    stroke-linecap:round;
-    fill:none;
-    opacity:0;
-    transform-origin:bottom center;
-    animation:steam 3.6s ease-in infinite;
+    stroke:var(--steam);stroke-width:2.4;stroke-linecap:round;fill:none;opacity:0;
+    transform-origin:bottom center;animation:steam 3.6s ease-in infinite;
   }
   .steam path:nth-child(2){animation-delay:.8s;}
   .steam path:nth-child(3){animation-delay:1.6s;}
@@ -217,231 +207,123 @@
     75%{opacity:.2;}
     100%{opacity:0;transform:translateY(-22px) scaleY(1.15);}
   }
-  .plinth{
-    position:relative;
-    width:240px;height:240px;
-    flex-shrink:0;
-  }
-  .platter{
-    width:240px;height:240px;
-    border-radius:50%;
-    background:
-      radial-gradient(circle at 50% 50%, #1c130a 0 26%, #0e0904 27% 100%),
-      repeating-radial-gradient(circle, rgba(255,255,255,0.015) 0 1px, transparent 1px 3px);
-    position:relative;
-    box-shadow:inset 0 0 0 6px rgba(0,0,0,0.4), inset 0 2px 4px rgba(255,255,255,0.1), 0 8px 24px rgba(0,0,0,0.5);
-  }
-  .record{
-    position:absolute;top:10px;left:10px;
-    width:220px;height:220px;
-    border-radius:50%;
-    background-image:url('vinyl-record.jpg');
-    background-size:cover;
-    background-position:center;
-    box-shadow:0 0 0 1px rgba(255,255,255,0.06), inset 0 0 30px rgba(0,0,0,0.35);
-    overflow:hidden;
-    opacity:0;
-    transform:scale(0.9);
-    transition:opacity .4s ease, transform .4s ease;
-  }
-  .record.on{opacity:1;transform:scale(1);}
-  .record.spin{animation:spin 3.2s linear infinite;}
-  @keyframes spin{to{transform:rotate(360deg);}}
-  .groove-text{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;}
-  .groove-text text{
-    font-family:var(--font-cursive);
-    font-size:11.5px;
-    fill:var(--cream);
-    opacity:0.7;
-    letter-spacing:1px;
-  }
-  .label{
-    position:absolute;left:30%;top:56%;transform:translate(-50%,-50%);
-    width:58px;height:58px;border-radius:50%;
-    background:
-      radial-gradient(circle at 40% 35%, rgba(255,255,255,0.35), transparent 45%),
-      repeating-radial-gradient(circle, rgba(0,0,0,0.05) 0 1px, transparent 1px 3px),
-      radial-gradient(circle, #d9b072, var(--accent) 70%);
-    display:flex;align-items:center;justify-content:center;
-    overflow:hidden;
-    background-size:cover;
-    background-position:center;
-    box-shadow:
-      0 0 0 1px rgba(0,0,0,0.3),
-      0 0 0 3px #cbbfa8,
-      0 0 0 4px rgba(0,0,0,0.25),
-      inset 0 1px 2px rgba(255,255,255,0.4);
-  }
-  .label img{width:100%;height:100%;object-fit:cover;border-radius:50%;}
-  .spindle{
-    position:absolute;top:56%;left:30%;
-    width:8px;height:8px;background:var(--brass-light);
-    border-radius:50%;transform:translate(-50%,-50%);
-    box-shadow:inset 0 1px 1px rgba(255,255,255,0.4), 0 0 0 1px var(--felt);
-    z-index:2;
-  }
-  .tonearm{
-    position:absolute;
-    top:-14px;right:-30px;
-    width:110px;height:110px;
-    transform-origin:88px 22px;
-    transform:rotate(-32deg);
-    transition:transform .6s cubic-bezier(.4,0,.2,1);
-    cursor:grab;
-    touch-action:none;
-    z-index:3;
-  }
-  .tonearm.down{transform:rotate(-8deg);}
-  .tonearm svg{width:100%;height:100%;overflow:visible;}
 
-  .now{
-    text-align:center;
-    margin-bottom:22px;
+  /* ---------------- SETUP PANEL ---------------- */
+  .card{
+    position:absolute;z-index:15;left:50%;top:50%;transform:translate(-50%,-50%);
+    width:min(90vw,420px);
+    background:rgba(0,0,0,0.32);
+    border:1px solid rgba(255,255,255,0.15);
+    border-radius:10px;
+    padding:30px;
+    backdrop-filter:blur(8px);
+    box-shadow:0 30px 60px rgba(0,0,0,0.4);
   }
-  .now .track{font-family:var(--font-serif);font-size:19px;font-weight:600;color:var(--cream);}
-  .now .artist{font-size:13.5px;color:var(--brass);margin-top:2px;font-family:var(--font-cursive);}
-  .transport{display:flex;justify-content:center;align-items:center;gap:26px;margin-bottom:8px;}
-  .icon-btn{
-    width:auto;height:auto;
-    background:none;
-    border:none;
-    color:var(--cream);
-    display:flex;align-items:center;justify-content:center;
-    cursor:pointer;
-    padding:4px;
-    opacity:0.8;
-    filter:drop-shadow(0 1px 3px rgba(0,0,0,0.4));
-    transition:opacity .15s ease, transform .15s ease;
+  .card h2{font-family:'Cormorant Garamond',serif;font-style:italic;font-weight:500;font-size:26px;margin:0 0 14px;color:var(--cream);}
+  label{display:block;font-size:13px;color:var(--cream);opacity:0.7;margin-bottom:6px;}
+  input[type=text]{
+    width:100%;background:transparent;border:none;border-bottom:1px solid rgba(255,255,255,0.3);
+    color:var(--cream);padding:9px 2px;font-size:14px;font-family:inherit;margin-bottom:16px;
   }
-  .icon-btn svg{stroke:var(--cream);fill:var(--cream);}
-  .icon-btn:hover{opacity:1;transform:scale(1.12);}
-  .icon-btn#playBtn svg{width:22px;height:22px;}
-  .icon-btn#prevBtn svg,.icon-btn#nextBtn svg{width:18px;height:18px;}
+  input[type=text]:focus{outline:none;border-bottom-color:var(--accent);}
+  .hint-text{font-size:12.5px;color:var(--cream);opacity:0.65;line-height:1.6;margin:0 0 16px;}
+  .hint-text code{background:rgba(255,255,255,0.12);padding:1px 5px;border-radius:4px;}
+  .hint-text a{color:var(--brass-light);}
+  .status{font-size:13px;color:var(--cream);opacity:0.7;margin-top:10px;min-height:16px;}
+  button{font-family:'DM Sans',sans-serif;font-weight:600;font-size:14px;border:none;border-radius:6px;padding:12px 24px;cursor:pointer;transition:transform .15s ease;}
+  button:focus-visible{outline:2px solid var(--accent);outline-offset:2px;}
+  button:active{transform:scale(0.97);}
+  .btn-primary{
+    background:linear-gradient(160deg, #d9b982, var(--accent) 60%, #6b4a24);
+    color:var(--btn-text);text-shadow:0 1px 0 rgba(255,255,255,0.25);
+    box-shadow:inset 0 1px 1px rgba(255,255,255,0.4), inset 0 -2px 3px rgba(0,0,0,0.3), 0 3px 8px rgba(0,0,0,0.3);
+  }
+  .btn-primary:hover{filter:brightness(1.08);}
+  .btn-primary:disabled{opacity:0.4;cursor:not-allowed;}
 
-  .candle{position:absolute;width:20px;pointer-events:none;}
-  .candle.c1{left:6px;bottom:8px;}
-  .candle.c2{right:10px;bottom:14px;width:16px;}
-  .candle svg{width:100%;overflow:visible;}
-  .flame{
-    fill:var(--flame);
-    transform-origin:bottom center;
-    animation:flicker 2.6s ease-in-out infinite;
+  /* ---------------- PLAYER PANEL ---------------- */
+  .player-panel{
+    position:absolute;z-index:8;left:6vw;bottom:7vh;
+    width:min(38vw,520px);min-width:280px;
   }
-  @keyframes flicker{
-    0%,100%{transform:scaleY(1) rotate(0deg);opacity:1;}
-    25%{transform:scaleY(1.08) rotate(-2deg);opacity:.92;}
-    50%{transform:scaleY(0.94) rotate(2deg);opacity:1;}
-    75%{transform:scaleY(1.05) rotate(-1deg);opacity:.95;}
+  .track-row{display:flex;align-items:flex-end;justify-content:space-between;gap:16px;}
+  .track{
+    margin:0 0 4px;font-family:'Cormorant Garamond',serif;font-style:italic;font-weight:500;
+    font-size:clamp(24px,3vw,40px);color:var(--cream);text-shadow:0 3px 15px rgba(0,0,0,.4);
+    line-height:1.1;
   }
+  .artist{font-size:13px;font-family:'DM Sans',sans-serif;color:var(--brass-light);opacity:0.85;}
+  .heart-btn{border:0;background:transparent;color:var(--cream);font-size:23px;cursor:pointer;opacity:.85;transition:transform .2s ease;flex-shrink:0;}
+  .heart-btn:hover{transform:scale(1.12);}
+  .heart-btn.active{color:#e8b28d;}
+  .progress{height:2px;background:rgba(245,235,222,.3);position:relative;cursor:pointer;margin-top:16px;}
+  .progress-fill{position:absolute;left:0;top:0;height:100%;width:0%;background:var(--cream);}
+  .progress-dot{position:absolute;top:50%;left:0%;width:10px;height:10px;border-radius:50%;background:var(--cream);transform:translate(-50%,-50%);}
+  .times{display:flex;justify-content:space-between;margin-top:8px;font-size:11px;letter-spacing:.06em;opacity:.65;}
+  .controls-row{display:flex;align-items:center;justify-content:space-between;margin-top:22px;}
+  .ctrl-btn{border:0;background:none;color:var(--cream);width:40px;height:40px;padding:0;cursor:pointer;display:flex;align-items:center;justify-content:center;opacity:.8;filter:drop-shadow(0 1px 3px rgba(0,0,0,0.4));transition:opacity .15s ease, transform .15s ease;}
+  .ctrl-btn svg{stroke:var(--cream);fill:var(--cream);}
+  .ctrl-btn:hover{opacity:1;transform:translateY(-1px);}
+  .ctrl-btn.active{color:var(--brass-light);opacity:1;}
+  .ctrl-btn.active svg{stroke:var(--brass-light);fill:var(--brass-light);}
+  .play-big{width:60px;height:60px;border:1px solid rgba(250,240,230,.8);border-radius:50%;}
+  .play-big svg{width:20px;height:20px;}
+  #prevBtn svg,#nextBtn svg{width:16px;height:16px;}
+  #shuffleBtn svg,#repeatBtn svg{width:17px;height:17px;}
 
-  /* ---- Crate ---- */
+  /* ---------------- CRATE ---------------- */
+  .below{padding:48px 6vw 80px;position:relative;z-index:1;}
   .crate-heading{
-    font-family:var(--font-cursive);
-    font-size:22px;font-weight:600;
-    margin:34px 0 -6px 18px;
-    color:var(--cream);
-    position:relative;
-    z-index:1;
-    display:inline-block;
-    background:var(--wood-dark);
-    padding:4px 14px 10px;
-    border-radius:8px 8px 0 0;
+    font-family:'Cormorant Garamond',serif;font-style:italic;font-size:22px;font-weight:600;
+    margin:0 0 -6px 18px;color:var(--cream);position:relative;display:inline-block;
+    background:var(--wood-dark);padding:4px 14px 10px;border-radius:8px 8px 0 0;
   }
   .crate-basket{
     background:
       repeating-linear-gradient(45deg, rgba(0,0,0,0.12) 0 2px, transparent 2px 7px),
       repeating-linear-gradient(-45deg, rgba(0,0,0,0.1) 0 2px, transparent 2px 7px),
       repeating-linear-gradient(90deg, rgba(255,255,255,0.05) 0 1px, transparent 1px 8px),
-      linear-gradient(160deg, #c19a68, #8a6238),
-      repeating-linear-gradient(90deg, #cbbfaa 0 2px, transparent 2px 70px);
-    border-radius:14px;
-    padding:16px;
+      linear-gradient(160deg, #c19a68, #8a6238);
+    border-radius:14px;padding:16px;max-width:760px;margin:0 auto;
     box-shadow:inset 0 3px 10px rgba(0,0,0,0.35), inset 0 -2px 4px rgba(255,255,255,0.08), 0 14px 28px var(--shadow);
   }
-  .crate{
-    display:grid;
-    grid-template-columns:repeat(auto-fill,minmax(130px,1fr));
-    gap:14px;
-  }
-  .sleeve{
-    background:none;
-    border:none;
-    padding:0;
-    cursor:pointer;
-    text-align:left;
-    transition:transform .15s ease;
-  }
+  .crate{display:grid;grid-template-columns:repeat(auto-fill,minmax(130px,1fr));gap:14px;}
+  .sleeve{background:none;border:none;padding:0;cursor:pointer;text-align:left;transition:transform .15s ease;}
   .sleeve:hover{transform:translateY(-4px);}
   .sleeve.active img{box-shadow:0 0 0 2px var(--accent), 0 6px 16px rgba(0,0,0,0.4);}
-  .sleeve img{width:100%;aspect-ratio:1;object-fit:cover;border-radius:4px;margin-bottom:8px;background:var(--felt);box-shadow:inset 0 1px 1px rgba(255,255,255,0.2), 0 4px 10px rgba(0,0,0,0.3);}
+  .sleeve img{width:100%;aspect-ratio:1;object-fit:cover;border-radius:4px;margin-bottom:8px;background:var(--felt);box-shadow:0 4px 10px rgba(0,0,0,0.3);}
   .sleeve .name{font-size:13px;font-weight:600;line-height:1.3;color:#2b1c10;}
   .sleeve .count{font-size:11.5px;color:#4a3320;opacity:0.75;margin-top:2px;}
-
   .empty{color:#2b1c10;opacity:0.75;font-size:13.5px;grid-column:1/-1;text-align:center;padding:20px 0;}
+
+  @media (max-width: 800px){
+    .turntable{left:-38vw;top:8vh;width:120vw;height:120vw;min-width:460px;min-height:460px;}
+    .mug-photo{width:30vw;right:2vw;bottom:2vh;}
+    .candle-photo{right:4vw;top:3vh;}
+    .candle-glow{right:6vw;top:3vh;}
+    .player-panel{left:6vw;bottom:4vh;width:82vw;min-width:0;}
+    .hint{display:none;}
+  }
 </style>
 </head>
 <body>
-<button class="mode-toggle" id="modeToggle" title="Toggle morning/evening" aria-label="Toggle morning or evening mode">☀️</button>
-<div class="wrap">
-  <p class="greeting" id="greeting">good morning</p>
-  <h1>Crate</h1>
-  <p class="sub">Your Spotify playlists, reimagined as a record collection. Pick a sleeve, drop the needle.</p>
+<button class="mode-toggle" id="modeToggle" title="Time of day" aria-label="Toggle time of day">☀️</button>
 
-  <div class="card" id="setupCard">
-    <h2>Connect your Spotify</h2>
-    <p class="hint">
-      One-time setup: create a free app at
-      <a href="https://developer.spotify.com/dashboard" target="_blank" rel="noopener">developer.spotify.com/dashboard</a>,
-      then add this exact URL as a Redirect URI in that app's settings:
-      <br><code id="redirectDisplay"></code>
-    </p>
-    <label for="clientId">Spotify Client ID</label>
-    <input type="text" id="clientId" placeholder="e.g. 8f3a9c2b1e4d4f6a9b0c1d2e3f4a5b6c" autocomplete="off">
-    <button class="btn-primary" id="connectBtn">Connect Spotify</button>
-    <div class="status" id="statusMsg"></div>
-    <p class="hint" style="margin-top:14px;margin-bottom:0;">Needs a Spotify <strong>Premium</strong> account for actual playback — free accounts can browse but Spotify blocks streaming through the Web Playback SDK.</p>
-  </div>
+<main class="room" id="room">
+  <div class="wood"></div>
+  <p class="hint" id="hintText">put on a record, stay awhile</p>
 
-  <div class="deck" id="deck">
-    <div class="candle c1">
-      <svg viewBox="0 0 20 50">
-        <rect x="4" y="14" width="12" height="36" rx="2" fill="var(--cream)" opacity="0.9"/>
-        <ellipse class="flame" cx="10" cy="8" rx="4" ry="8"/>
-        <ellipse class="flame" cx="10" cy="9" rx="2" ry="4.5" fill="#fff3d6" opacity="0.85"/>
-      </svg>
-    </div>
-    <div class="candle c2">
-      <svg viewBox="0 0 20 50">
-        <rect x="4" y="20" width="12" height="30" rx="2" fill="var(--cream)" opacity="0.9"/>
-        <ellipse class="flame" cx="10" cy="14" rx="3.5" ry="7"/>
-        <ellipse class="flame" cx="10" cy="15" rx="1.8" ry="4" fill="#fff3d6" opacity="0.85"/>
-      </svg>
-    </div>
-    <div class="scene">
-      <div class="mug">
-        <svg viewBox="0 0 70 90">
-          <g class="steam">
-            <path d="M20 46 C 14 38, 26 32, 20 24 C 14 16, 26 10, 22 2"/>
-            <path d="M35 46 C 29 38, 41 32, 35 24 C 29 16, 41 10, 37 2"/>
-            <path d="M50 46 C 44 38, 56 32, 50 24 C 44 16, 56 10, 52 2"/>
-          </g>
-          <path d="M8 48 h50 l-5 30 a6 6 0 0 1-6 5 H19 a6 6 0 0 1-6-5 Z" fill="#d0bfaa" style="fill:var(--cream); filter:drop-shadow(0 2px 4px rgba(0,0,0,0.3));"/>
-          <path d="M8 48 h50 l-1.5 9 h-47 Z" fill="#8a6e4d" style="fill:var(--accent);"/>
-          <path d="M58 54 q14 2 12 16 q-2 12 -14 10" fill="none" stroke="#d0bfaa" stroke-width="5" style="stroke:var(--cream); filter:drop-shadow(0 2px 4px rgba(0,0,0,0.3));"/>
-        </svg>
-      </div>
-      <div class="plinth">
-        <div class="platter">
-          <div class="record" id="record">
-            <svg class="groove-text" viewBox="0 0 220 220">
-              <path id="textArc" d="M 66,123 m -62,0 a 62,62 0 1,1 124,0 a 62,62 0 1,1 -124,0" fill="none"/>
-              <text>
-                <textPath id="trackArcText" href="#textArc" startOffset="2%">Pick a record to begin</textPath>
-              </text>
-            </svg>
-            <div class="spindle"></div>
-            <div class="label" id="recordLabel"></div>
-          </div>
+  <div class="turntable">
+    <div class="plinth">
+      <div class="platter">
+        <div class="inner-platter"></div>
+        <div class="record" id="record">
+          <svg class="groove-text" viewBox="0 0 220 220">
+            <path id="textArc" d="M 66,123 m -62,0 a 62,62 0 1,1 124,0 a 62,62 0 1,1 -124,0" fill="none"/>
+            <text><textPath id="trackArcText" href="#textArc" startOffset="2%">Pick a record to begin</textPath></text>
+          </svg>
+          <div class="spindle"></div>
+          <div class="label" id="recordLabel"></div>
         </div>
         <div class="tonearm" id="tonearm">
           <svg viewBox="0 0 110 110">
@@ -452,38 +334,91 @@
                 <stop offset="100%" stop-color="#efe9de"/>
               </linearGradient>
             </defs>
-            <circle cx="88" cy="22" r="10" fill="url(#armGrad)" style="filter:drop-shadow(0 2px 4px rgba(0,0,0,0.3));"/>
-            <circle cx="88" cy="22" r="4" fill="#20150d" style="fill:var(--felt);"/>
-            <rect x="14" y="18" width="76" height="5" rx="2.5" fill="url(#armGrad)" transform="rotate(3 88 22)" style="filter:drop-shadow(0 2px 4px rgba(0,0,0,0.3));"/>
-            <g transform="rotate(3 88 22)" style="filter:drop-shadow(0 2px 4px rgba(0,0,0,0.3));">
-              <rect x="8" y="12" width="19" height="17" rx="2" fill="#20150d" style="fill:var(--felt);"/>
-              <rect x="8" y="12" width="19" height="5" rx="2" fill="#d9b185" style="fill:var(--cream);"/>
-              <circle cx="12.5" cy="15" r="1" fill="#8a6e4d" style="fill:var(--accent);"/>
-              <circle cx="22.5" cy="15" r="1" fill="#8a6e4d" style="fill:var(--accent);"/>
-              <line x1="10" y1="29" x2="6" y2="35" stroke="#20150d" stroke-width="2" style="stroke:var(--felt);"/>
+            <circle cx="88" cy="22" r="10" fill="url(#armGrad)"/>
+            <circle cx="88" cy="22" r="4" fill="var(--felt)"/>
+            <rect x="14" y="18" width="76" height="5" rx="2.5" fill="url(#armGrad)" transform="rotate(3 88 22)"/>
+            <g transform="rotate(3 88 22)">
+              <rect x="8" y="12" width="19" height="17" rx="2" fill="var(--felt)"/>
+              <rect x="8" y="12" width="19" height="5" rx="2" fill="#cfc9bd"/>
+              <circle cx="12.5" cy="15" r="1" fill="#8a8378"/>
+              <circle cx="22.5" cy="15" r="1" fill="#8a8378"/>
+              <line x1="10" y1="29" x2="6" y2="35" stroke="var(--felt)" stroke-width="2"/>
             </g>
           </svg>
         </div>
       </div>
     </div>
-    <div class="now" id="nowPlaying">
-      <div class="track">Nothing on the platter yet</div>
-      <div class="artist">Pick a record from your crate below</div>
+  </div>
+
+  <div class="candle-glow"></div>
+  <div class="candle-photo">
+    <img src="candle-photo.jpg" alt="A lit candle">
+  </div>
+
+  <div class="mug-photo">
+    <img src="coffee-photo.jpg" alt="A latte">
+    <svg class="steam" viewBox="0 0 70 90">
+      <path d="M20 46 C 14 38, 26 32, 20 24 C 14 16, 26 10, 22 2"/>
+      <path d="M35 46 C 29 38, 41 32, 35 24 C 29 16, 41 10, 37 2"/>
+      <path d="M50 46 C 44 38, 56 32, 50 24 C 44 16, 56 10, 52 2"/>
+    </svg>
+  </div>
+
+  <div class="card" id="setupCard">
+    <h2>Connect your Spotify</h2>
+    <p class="hint-text">
+      One-time setup: create a free app at
+      <a href="https://developer.spotify.com/dashboard" target="_blank" rel="noopener">developer.spotify.com/dashboard</a>,
+      then add this exact URL as a Redirect URI in that app's settings:
+      <br><code id="redirectDisplay"></code>
+    </p>
+    <label for="clientId">Spotify Client ID</label>
+    <input type="text" id="clientId" placeholder="e.g. 8f3a9c2b1e4d4f6a9b0c1d2e3f4a5b6c" autocomplete="off">
+    <button class="btn-primary" id="connectBtn">Connect Spotify</button>
+    <div class="status" id="statusMsg"></div>
+    <p class="hint-text" style="margin-top:14px;margin-bottom:0;">Needs a Spotify <strong>Premium</strong> account for actual playback.</p>
+  </div>
+
+  <div class="player-panel" id="playerPanel">
+    <div class="track-row">
+      <div>
+        <div class="track" id="trackTitle">Nothing on the platter yet</div>
+        <div class="artist" id="trackArtist">Pick a record from your crate below</div>
+      </div>
+      <button class="heart-btn" id="heartBtn" aria-label="Like this song" title="Save to Liked Songs">♡</button>
     </div>
-    <div class="transport">
-      <button class="icon-btn" id="prevBtn" title="Previous">
+    <div class="progress" id="progressBar">
+      <div class="progress-fill" id="progressFill"></div>
+      <div class="progress-dot" id="progressDot"></div>
+    </div>
+    <div class="times">
+      <span id="curTime">0:00</span>
+      <span id="durTime">0:00</span>
+    </div>
+    <div class="controls-row">
+      <button class="ctrl-btn" id="shuffleBtn" title="Shuffle">
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M3 6h4l9 12h5M3 18h4l3-4M16 6h5l-3 4M18 4l3 2-3 2M18 18l3 2-3 2"/></svg>
+      </button>
+      <button class="ctrl-btn" id="prevBtn" title="Previous">
         <svg viewBox="0 0 24 24"><path d="M6 5v14M20 6 8 12l12 6z"/></svg>
       </button>
-      <button class="icon-btn" id="playBtn" title="Play/Pause">
+      <button class="ctrl-btn play-big" id="playBtn" title="Play/Pause">
         <svg viewBox="0 0 24 24" id="playIcon"><path d="M6 4l14 8-14 8z"/></svg>
       </button>
-      <button class="icon-btn" id="nextBtn" title="Next">
+      <button class="ctrl-btn" id="nextBtn" title="Next">
         <svg viewBox="0 0 24 24"><path d="M18 5v14M4 6l12 6-12 6z"/></svg>
+      </button>
+      <button class="ctrl-btn" id="repeatBtn" title="Repeat">
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M17 1l4 4-4 4M3 11V9a4 4 0 014-4h14M7 23l-4-4 4-4M21 13v2a4 4 0 01-4 4H3"/></svg>
       </button>
     </div>
   </div>
 
-  <div class="crate-heading" id="crateHeading" style="display:none;">Your crate</div>
+  <div class="vignette"></div>
+</main>
+
+<div class="below">
+  <div class="crate-heading" id="crateHeading" style="display:none;">your crate</div>
   <div class="crate-basket">
     <div class="crate" id="crate"></div>
   </div>
@@ -493,30 +428,25 @@
 <script>
 /* ---------- time-of-day mode ---------- */
 const modeToggle = document.getElementById('modeToggle');
-const greeting = document.getElementById('greeting');
+const hintText = document.getElementById('hintText');
 const PERIODS = [
-  { key:'dawn',      icon:'🌅', label:'dawn',      hours:[5,7]   },
-  { key:'morning',   icon:'☀️', label:'morning',   hours:[7,12]  },
-  { key:'afternoon', icon:'🌤️', label:'afternoon', hours:[12,17] },
-  { key:'dusk',      icon:'🌇', label:'dusk',      hours:[17,19] },
-  { key:'night',     icon:'🌙', label:'night',     hours:[19,29] } // wraps past midnight
+  { key:'dawn',      icon:'🌅', label:'dawn',      hint:'the record spins quietly before sunrise', hours:[5,7]   },
+  { key:'morning',   icon:'☀️', label:'morning',   hint:'put on a record, stay awhile',            hours:[7,12]  },
+  { key:'afternoon', icon:'🌤️', label:'afternoon', hint:'a slow afternoon, one song at a time',     hours:[12,17] },
+  { key:'dusk',      icon:'🌇', label:'dusk',      hint:'the light is going gold now',              hours:[17,19] },
+  { key:'night',     icon:'🌙', label:'night',     hint:'just you, the candles, and the record',    hours:[19,29] }
 ];
 function periodForHour(h){
-  const hh = h < 5 ? h + 24 : h; // treat 0-4am as continuation of night
+  const hh = h < 5 ? h + 24 : h;
   return PERIODS.find(p => hh >= p.hours[0] && hh < p.hours[1]) || PERIODS[4];
 }
 let periodIndex = PERIODS.indexOf(periodForHour(new Date().getHours()));
-
 function applyTheme(){
   const p = PERIODS[periodIndex];
   document.documentElement.setAttribute('data-theme', p.key);
   modeToggle.textContent = p.icon;
   modeToggle.title = 'Time of day: ' + p.label + ' (click to change)';
-  const greetings = {
-    dawn:'early start ☕', morning:'good morning ☕', afternoon:'good afternoon ☕',
-    dusk:'good evening ☕', night:'still up? ☕'
-  };
-  greeting.textContent = greetings[p.key];
+  hintText.textContent = p.hint;
 }
 modeToggle.addEventListener('click', ()=>{
   periodIndex = (periodIndex + 1) % PERIODS.length;
@@ -531,25 +461,65 @@ const SCOPES = [
   'streaming','user-read-email','user-read-private',
   'user-read-playback-state','user-modify-playback-state',
   'playlist-read-private','playlist-read-collaborative',
-  'user-library-read'
+  'user-library-read','user-library-modify'
 ].join(' ');
 
 const statusMsg = document.getElementById('statusMsg');
 const setupCard = document.getElementById('setupCard');
-const deck = document.getElementById('deck');
 const crate = document.getElementById('crate');
 const crateHeading = document.getElementById('crateHeading');
 const recordEl = document.getElementById('record');
 const recordLabel = document.getElementById('recordLabel');
 const trackArcText = document.getElementById('trackArcText');
 const tonearm = document.getElementById('tonearm');
-const nowPlaying = document.getElementById('nowPlaying');
+const trackTitle = document.getElementById('trackTitle');
+const trackArtist = document.getElementById('trackArtist');
 const playBtn = document.getElementById('playBtn');
+const heartBtn = document.getElementById('heartBtn');
+const shuffleBtn = document.getElementById('shuffleBtn');
+const repeatBtn = document.getElementById('repeatBtn');
+const progressBar = document.getElementById('progressBar');
+const progressFill = document.getElementById('progressFill');
+const progressDot = document.getElementById('progressDot');
+const curTime = document.getElementById('curTime');
+const durTime = document.getElementById('durTime');
 
 let accessToken = null;
 let player = null;
 let deviceId = null;
 let isPlaying = false;
+let currentTrackId = null;
+let currentTrackLiked = false;
+let shuffleOn = false;
+let repeatMode = 'off'; // off -> context -> track -> off
+let basePosition = 0, durationMs = 0, lastTick = Date.now();
+
+function formatTime(ms){
+  if(!Number.isFinite(ms) || ms < 0) return '0:00';
+  const s = Math.floor(ms/1000);
+  return Math.floor(s/60) + ':' + (s%60).toString().padStart(2,'0');
+}
+function updateProgressUI(){
+  if(!durationMs) return;
+  let pos = basePosition;
+  if(isPlaying) pos = Math.min(basePosition + (Date.now() - lastTick), durationMs);
+  const pct = (pos/durationMs)*100;
+  progressFill.style.width = pct+'%';
+  progressDot.style.left = pct+'%';
+  curTime.textContent = formatTime(pos);
+  durTime.textContent = formatTime(durationMs);
+}
+setInterval(updateProgressUI, 500);
+
+progressBar.addEventListener('click', e=>{
+  if(!durationMs || !player) return;
+  const rect = progressBar.getBoundingClientRect();
+  const pct = Math.max(0, Math.min(1, (e.clientX - rect.left)/rect.width));
+  const target = pct*durationMs;
+  basePosition = target; lastTick = Date.now();
+  updateProgressUI();
+  player.seek(target).catch(()=>{});
+});
 
 /* ---------- PKCE helpers ---------- */
 function randomString(len){
@@ -630,8 +600,7 @@ async function handleRedirect(){
 /* ---------- app start ---------- */
 function startApp(){
   setupCard.style.display='none';
-  deck.classList.add('show');
-  crateHeading.style.display='block';
+  crateHeading.style.display='inline-block';
   loadPlaylists();
   initPlayer();
 }
@@ -648,7 +617,6 @@ async function loadPlaylists(){
 
   crate.innerHTML='';
 
-  // Liked Songs first, since Spotify doesn't include it in /me/playlists at all
   if(likedData.total > 0){
     const div = document.createElement('div');
     div.className='sleeve';
@@ -686,7 +654,7 @@ window.onSpotifyWebPlaybackSDKReady = ()=>{ spotifySdkReady = true; };
 function initPlayer(){
   const setupPlayer = ()=>{
     player = new Spotify.Player({
-      name: 'Crate — Vinyl Simulator',
+      name: 'Crate — a quiet moment',
       getOAuthToken: cb => cb(accessToken),
       volume: 0.8
     });
@@ -704,11 +672,25 @@ function initPlayer(){
         : '<path d="M6 4l14 8-14 8z"/>';
       recordEl.classList.toggle('spin', isPlaying);
       tonearm.classList.toggle('down', isPlaying);
+
+      basePosition = state.position;
+      durationMs = state.duration;
+      lastTick = Date.now();
+      updateProgressUI();
+
+      shuffleOn = !!state.shuffle;
+      shuffleBtn.classList.toggle('active', shuffleOn);
+      repeatMode = state.repeat_mode === 2 ? 'track' : state.repeat_mode === 1 ? 'context' : 'off';
+      repeatBtn.classList.toggle('active', repeatMode !== 'off');
+
       const track = state.track_window.current_track;
-      if(track){
-        nowPlaying.querySelector('.track').textContent = track.name;
-        nowPlaying.querySelector('.artist').textContent = track.artists.map(a=>a.name).join(', ');
-        trackArcText.textContent = track.name + '  ♥  ' + track.artists.map(a=>a.name).join(', ') + '  ♥  ';
+      if(track && track.id !== currentTrackId){
+        currentTrackId = track.id;
+        const artistNames = track.artists.map(a=>a.name).join(', ');
+        trackTitle.textContent = track.name;
+        trackArtist.textContent = artistNames;
+        trackArcText.textContent = track.name + '  ♥  ' + artistNames + '  ♥  ';
+        checkLiked(track.id);
       }
     });
 
@@ -726,15 +708,56 @@ function initPlayer(){
   }
 }
 
+async function checkLiked(trackId){
+  try{
+    const res = await fetch(`https://api.spotify.com/v1/me/tracks/contains?ids=${trackId}`,{
+      headers:{Authorization:'Bearer '+accessToken}
+    });
+    const data = await res.json();
+    currentTrackLiked = !!data[0];
+    heartBtn.classList.toggle('active', currentTrackLiked);
+    heartBtn.textContent = currentTrackLiked ? '♥' : '♡';
+  }catch(e){}
+}
+
+heartBtn.addEventListener('click', async ()=>{
+  if(!currentTrackId) return;
+  const method = currentTrackLiked ? 'DELETE' : 'PUT';
+  await fetch(`https://api.spotify.com/v1/me/tracks?ids=${currentTrackId}`,{
+    method, headers:{Authorization:'Bearer '+accessToken}
+  });
+  currentTrackLiked = !currentTrackLiked;
+  heartBtn.classList.toggle('active', currentTrackLiked);
+  heartBtn.textContent = currentTrackLiked ? '♥' : '♡';
+});
+
+shuffleBtn.addEventListener('click', async ()=>{
+  if(!deviceId) return;
+  shuffleOn = !shuffleOn;
+  shuffleBtn.classList.toggle('active', shuffleOn);
+  await fetch(`https://api.spotify.com/v1/me/player/shuffle?state=${shuffleOn}&device_id=${deviceId}`,{
+    method:'PUT', headers:{Authorization:'Bearer '+accessToken}
+  });
+});
+
+repeatBtn.addEventListener('click', async ()=>{
+  if(!deviceId) return;
+  repeatMode = repeatMode === 'off' ? 'context' : repeatMode === 'context' ? 'track' : 'off';
+  repeatBtn.classList.toggle('active', repeatMode !== 'off');
+  await fetch(`https://api.spotify.com/v1/me/player/repeat?state=${repeatMode}&device_id=${deviceId}`,{
+    method:'PUT', headers:{Authorization:'Bearer '+accessToken}
+  });
+});
+
 async function playLikedSongs(sleeveEl){
   document.querySelectorAll('.sleeve').forEach(s=>s.classList.remove('active'));
   sleeveEl.classList.add('active');
   recordLabel.innerHTML = '💚';
-  recordLabel.style.fontSize = '28px';
+  recordLabel.style.fontSize = '2em';
   recordEl.classList.add('on');
   trackArcText.textContent = 'Liked Songs  ♥  ';
-  nowPlaying.querySelector('.track').textContent = 'Liked Songs';
-  nowPlaying.querySelector('.artist').textContent = 'Dropping the needle…';
+  trackTitle.textContent = 'Liked Songs';
+  trackArtist.textContent = 'Dropping the needle…';
 
   if(!deviceId){
     statusMsg.textContent = 'Player still connecting — try again in a second.';
@@ -762,8 +785,8 @@ async function playPlaylist(pl, sleeveEl, img){
   recordLabel.innerHTML = img ? `<img src="${img}" alt="">` : '';
   recordEl.classList.add('on');
   trackArcText.textContent = pl.name + '  ♥  ';
-  nowPlaying.querySelector('.track').textContent = pl.name;
-  nowPlaying.querySelector('.artist').textContent = 'Dropping the needle…';
+  trackTitle.textContent = pl.name;
+  trackArtist.textContent = 'Dropping the needle…';
 
   if(!deviceId){
     statusMsg.textContent = 'Player still connecting — try again in a second.';
@@ -782,8 +805,8 @@ document.getElementById('prevBtn').addEventListener('click', ()=> player && play
 
 /* ---------- draggable tonearm ---------- */
 const plinthEl = document.querySelector('.plinth');
-const MIN_ANGLE = -34; // resting, off the record
-const MAX_ANGLE = -4;  // dropped onto the record
+const MIN_ANGLE = -34;
+const MAX_ANGLE = -4;
 let armDragging = false;
 
 function pivotPoint(){
@@ -823,8 +846,6 @@ tonearm.addEventListener('pointerup', e=>{
 });
 
 handleRedirect();
-
-// resume a session already in progress (client id typed, not yet redirected)
 const savedClientId = sessionStorage.getItem('vinyl_client_id');
 if(savedClientId) document.getElementById('clientId').value = savedClientId;
 </script>
