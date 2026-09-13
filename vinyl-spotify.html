@@ -3,377 +3,365 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Crate — your Spotify, on vinyl (Timescape Edition)</title>
+<title>Crate — your Spotify, on vinyl</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Caveat:wght@500;600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
-  /* Define distinct visual themes based on the Time of Day */
-  
-  :root {
-    /* Default (Backup) Theme: Deep Night (Cozy & Warm) */
-    --bg-1: #241c30; --bg-2: #100c17; --wood: #2b2530; --wood-dark: #141018;
-    --plank: #241f29; --ink: #e9e3f0; --cream: #e9e3f0;
-    --accent: #c99a5b; --accent-2: #8f6f45; --brass: #c3ad7c; --brass-light: #e8c99a;
-    --felt: #08060a; --card-bg: rgba(10,8,16,0.4); --card-border: rgba(201,154,91,0.22);
-    --steam: rgba(233,227,240,0.35); --shadow: rgba(0,0,0,0.55); --flame: #e8873f;
-    --btn-text: #2b1c14;
-    color-scheme: dark;
-    --theme-name: 'night';
+  :root{
+    --bg-1:#efe2c9;
+    --bg-2:#d8c19a;
+    --wood:#cdbfa8;
+    --wood-dark:#a89477;
+    --plank:#c3b295;
+    --ink:#3b2b1c;
+    --cream:#fdf6ea;
+    --accent:#a3672f;
+    --accent-2:#6b4a30;
+    --brass:#b3874b;
+    --brass-light:#8b5e34;
+    --felt:#150e08;
+    --card-bg:rgba(255,255,255,0.4);
+    --card-border:rgba(107,74,48,0.25);
+    --steam:rgba(255,255,255,0.55);
+    --shadow:rgba(90,58,30,0.25);
+    --flame:#f0a94e;
+    --btn-text:#2b1c14;
+    color-scheme:light;
   }
-
-  html[data-theme="dawn"] {
-    /* Cool, blue tones with warm accents */
-    --bg-1: #5b6a86; --bg-2: #2c3348; --wood: #4a4a52; --wood-dark: #24222a;
-    --plank: #41414a; --ink: #eef0f5; --cream: #eef0f5;
-    --accent: #c9a45e; --accent-2: #9b8256; --brass: #c3ad7c; --brass-light: #ddc99a;
-    --felt: #0c0a0d; --card-bg: rgba(20,22,32,0.35); --card-border: rgba(201,164,94,0.25);
-    --steam: rgba(238,240,245,0.4); --shadow: rgba(0,0,0,0.45); --flame: #f0a94e;
-    color-scheme: dark;
-    --theme-name: 'dawn';
+  html[data-theme="dawn"]{
+    --bg-1:#5b6a86; --bg-2:#2c3348; --wood:#4a4a52; --wood-dark:#24222a;
+    --plank:#41414a; --ink:#eef0f5; --cream:#eef0f5;
+    --accent:#c9a45e; --accent-2:#9b8256; --brass:#c3ad7c; --brass-light:#ddc99a;
+    --felt:#0c0a0d; --card-bg:rgba(20,22,32,0.35); --card-border:rgba(201,164,94,0.25);
+    --steam:rgba(238,240,245,0.4); --shadow:rgba(0,0,0,0.45); --flame:#f0a94e;
+    color-scheme:dark;
   }
-
-  html[data-theme="morning"] {
-    /* Warm, rich, coffee-colored tones */
-    --bg-1: #f2e6cc; --bg-2: #dcc79c; --wood: #c9b48c; --wood-dark: #9d8560;
-    --plank: #c3ac82; --ink: #3b2b1c; --cream: #fffaf0;
-    --accent: #b17636; --accent-2: #7c5a34; --brass: #b3874b; --brass-light: #8b5e34;
-    --felt: #150e08; --card-bg: rgba(255,255,255,0.45); --card-border: rgba(124,90,52,0.25);
-    --steam: rgba(255,255,255,0.6); --shadow: rgba(90,58,30,0.2); --flame: #f4b45e;
-    color-scheme: light;
-    --theme-name: 'morning';
+  html[data-theme="morning"]{
+    --bg-1:#f2e6cc; --bg-2:#dcc79c; --wood:#c9b48c; --wood-dark:#9d8560;
+    --plank:#c3ac82; --ink:#3b2b1c; --cream:#fffaf0;
+    --accent:#b17636; --accent-2:#7c5a34; --brass:#b3874b; --brass-light:#8b5e34;
+    --felt:#150e08; --card-bg:rgba(255,255,255,0.45); --card-border:rgba(124,90,52,0.25);
+    --steam:rgba(255,255,255,0.6); --shadow:rgba(90,58,30,0.2); --flame:#f4b45e;
+    color-scheme:light;
   }
-
-  html[data-theme="afternoon"] {
-    /* Cool blues with rich, vibrant browns */
-    --bg-1: #eaf1f5; --bg-2: #c9dce6; --wood: #8a6a4c; --wood-dark: #5f4630;
-    --plank: #7f6146; --ink: #2c2116; --cream: #fffdf8;
-    --accent: #9c5a2c; --accent-2: #6b4326; --brass: #b3874b; --brass-light: #8b5e34;
-    --felt: #150e08; --card-bg: rgba(255,255,255,0.5); --card-border: rgba(107,67,38,0.25);
-    --steam: rgba(255,255,255,0.6); --shadow: rgba(50,50,60,0.2); --flame: #f4b45e;
-    color-scheme: light;
-    --theme-name: 'afternoon';
+  html[data-theme="afternoon"]{
+    --bg-1:#eaf1f5; --bg-2:#c9dce6; --wood:#8a6a4c; --wood-dark:#5f4630;
+    --plank:#7f6146; --ink:#2c2116; --cream:#fffdf8;
+    --accent:#9c5a2c; --accent-2:#6b4326; --brass:#b3874b; --brass-light:#8b5e34;
+    --felt:#150e08; --card-bg:rgba(255,255,255,0.5); --card-border:rgba(107,67,38,0.25);
+    --steam:rgba(255,255,255,0.6); --shadow:rgba(50,50,60,0.2); --flame:#f4b45e;
+    color-scheme:light;
   }
-
-  html[data-theme="dusk"] {
-    /* Warm purples and deep, intense orange accents */
-    --bg-1: #6b4a5a; --bg-2: #2e2233; --wood: #4a3327; --wood-dark: #241811;
-    --plank: #40291f; --ink: #f5e9df; --cream: #f5e9df;
-    --accent: #e08a4f; --accent-2: #b3874b; --brass: #d9a668; --brass-light: #eec38e;
-    --felt: #0c0806; --card-bg: rgba(20,12,16,0.35); --card-border: rgba(224,138,79,0.28);
-    --steam: rgba(245,233,223,0.4); --shadow: rgba(0,0,0,0.5); --flame: #e8873f;
-    color-scheme: dark;
-    --theme-name: 'dusk';
+  html[data-theme="dusk"]{
+    --bg-1:#6b4a5a; --bg-2:#2e2233; --wood:#4a3327; --wood-dark:#241811;
+    --plank:#40291f; --ink:#f5e9df; --cream:#f5e9df;
+    --accent:#e08a4f; --accent-2:#b3874b; --brass:#d9a668; --brass-light:#eec38e;
+    --felt:#0c0806; --card-bg:rgba(20,12,16,0.35); --card-border:rgba(224,138,79,0.28);
+    --steam:rgba(245,233,223,0.4); --shadow:rgba(0,0,0,0.5); --flame:#e8873f;
+    color-scheme:dark;
   }
-
-  /* Core Layout and Typography */
-  * { box-sizing: border-box; }
-  body {
-    margin: 0;
-    /* Use variables to create the new blended gradient background for each theme */
+  html[data-theme="night"]{
+    --bg-1:#241c30; --bg-2:#100c17; --wood:#2b2530; --wood-dark:#141018;
+    --plank:#241f29; --ink:#e9e3f0; --cream:#e9e3f0;
+    --accent:#c99a5b; --accent-2:#8f6f45; --brass:#c3ad7c; --brass-light:#e8c99a;
+    --felt:#08060a; --card-bg:rgba(10,8,16,0.4); --card-border:rgba(201,154,91,0.22);
+    --steam:rgba(233,227,240,0.35); --shadow:rgba(0,0,0,0.55); --flame:#e8873f;
+    color-scheme:dark;
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0;
     background:
-      radial-gradient(ellipse 900px 500px at 50% -10%, var(--bg-1), transparent),
-      linear-gradient(180deg, var(--bg-1), var(--bg-2) 60%);
-    color: var(--ink);
-    font-family: 'Inter', sans-serif;
-    min-height: 100vh;
-    padding: 48px 20px 80px;
-    transition: background .6s ease, color .6s ease;
+      radial-gradient(ellipse 1100px 700px at 50% 0%, rgba(255,255,255,0.12), transparent 60%),
+      repeating-linear-gradient(90deg, rgba(0,0,0,0.035) 0 2px, transparent 2px 70px),
+      linear-gradient(160deg, var(--plank), var(--wood-dark) 85%);
+    color:var(--ink);
+    font-family:'Inter',sans-serif;
+    min-height:100vh;
+    padding:48px 20px 80px;
+    transition:background .6s ease, color .6s ease;
   }
-  .wrap { max-width: 760px; margin: 0 auto; position: relative; }
-
-  /* Timescape Mode Toggle */
-  .mode-toggle {
-    position: fixed; top: 20px; right: 20px;
-    width: 46px; height: 46px; border-radius: 50%;
-    background: var(--card-bg);
-    border: 1px solid var(--card-border);
-    display: flex; align-items: center; justify-content: center;
-    font-size: 19px; cursor: pointer;
-    backdrop-filter: blur(6px);
-    z-index: 10;
-    transition: background 0.3s, transform 0.2s;
+  .wrap{max-width:760px;margin:0 auto;position:relative;}
+  .mode-toggle{
+    position:fixed;top:22px;right:22px;
+    width:44px;height:44px;border-radius:50%;
+    background:radial-gradient(circle at 32% 28%, #e8d9b8, var(--brass) 55%, #7a5a30 100%);
+    border:none;
+    display:flex;align-items:center;justify-content:center;
+    font-size:17px;cursor:pointer;
+    box-shadow:0 0 0 3px rgba(0,0,0,0.15), inset 0 1px 2px rgba(255,255,255,0.5), inset 0 -2px 4px rgba(0,0,0,0.35), 0 4px 10px rgba(0,0,0,0.35);
+    z-index:10;
+    transition:transform .2s ease;
   }
-  .mode-toggle:hover { background: rgba(255,255,255,0.1); }
-  .mode-toggle:active { transform: scale(0.95); }
-
-  /* Typography */
-  .greeting {
-    font-family: 'Caveat', cursive;
-    font-size: 22px;
-    color: var(--accent);
-    margin: 0 0 2px;
+  .mode-toggle:hover{transform:rotate(-12deg) scale(1.05);}
+  .mode-toggle:active{transform:rotate(0deg) scale(0.95);}
+  .greeting{
+    font-family:'Caveat',cursive;
+    font-size:22px;
+    color:var(--accent);
+    margin:0 0 2px;
   }
-  h1 {
-    font-family: 'Fraunces', serif;
-    font-weight: 600;
-    font-size: clamp(32px, 5vw, 48px);
-    margin: 0 0 6px;
-    letter-spacing: -0.01em;
-    color: var(--ink);
+  h1{
+    font-family:'Fraunces',serif;
+    font-weight:600;
+    font-size:clamp(32px,5vw,48px);
+    margin:0 0 6px;
+    letter-spacing:-0.01em;
+    color:var(--cream);
   }
-  .sub {
-    color: var(--accent-2);
-    font-size: 15px;
-    margin: 0 0 40px;
-    max-width: 46ch;
-    line-height: 1.5;
+  .sub{
+    color:var(--cream);
+    opacity:0.75;
+    font-size:15px;
+    margin:0 0 40px;
+    max-width:46ch;
+    line-height:1.5;
   }
 
-  /* ---- Card and Form ---- */
-  .card {
-    background: var(--card-bg);
-    border: 1px solid var(--card-border);
-    border-radius: 14px;
-    padding: 28px;
-    margin-bottom: 32px;
-    backdrop-filter: blur(6px);
+  /* ---- Setup, unboxed: sits right on the wood ---- */
+  .card{
+    padding:0;
+    margin-bottom:36px;
   }
-  .card h2 { font-family: 'Fraunces', serif; font-weight: 600; font-size: 20px; margin: 0 0 14px; color: var(--ink); }
-  label { display: block; font-size: 13px; color: var(--accent-2); margin-bottom: 6px; }
-  input[type=text] {
-    width: 100%;
-    background: var(--felt);
-    border: 1px solid var(--card-border);
-    color: var(--cream);
-    padding: 11px 13px;
-    border-radius: 8px;
-    font-size: 14px;
-    font-family: inherit;
-    margin-bottom: 16px;
+  .card h2{font-family:'Fraunces',serif;font-weight:600;font-size:20px;margin:0 0 14px;color:var(--cream);}
+  label{display:block;font-size:13px;color:var(--cream);opacity:0.7;margin-bottom:6px;}
+  input[type=text]{
+    width:100%;
+    background:transparent;
+    border:none;
+    border-bottom:1px solid rgba(255,255,255,0.3);
+    color:var(--cream);
+    padding:9px 2px;
+    border-radius:0;
+    font-size:14px;
+    font-family:inherit;
+    margin-bottom:16px;
   }
-  input[type=text]:focus { outline: 2px solid var(--accent); outline-offset: 1px; }
-  .hint { font-size: 12.5px; color: var(--accent-2); line-height: 1.6; margin: 0 0 16px; }
-  .hint code { background: rgba(139,94,52,0.15); padding: 1px 5px; border-radius: 4px; }
-  .hint a { color: var(--accent); }
-  button {
-    font-family: 'Inter', sans-serif;
-    font-weight: 600;
-    font-size: 14px;
-    border: none;
-    border-radius: 999px;
-    padding: 12px 24px;
-    cursor: pointer;
-    transition: transform .15s ease, background 0.2s;
+  input[type=text]:focus{outline:none;border-bottom-color:var(--accent);}
+  .hint{font-size:12.5px;color:var(--cream);opacity:0.65;line-height:1.6;margin:0 0 16px;}
+  .hint code{background:rgba(255,255,255,0.12);padding:1px 5px;border-radius:4px;}
+  .hint a{color:var(--brass-light);}
+  button{
+    font-family:'Inter',sans-serif;
+    font-weight:600;
+    font-size:14px;
+    border:none;
+    border-radius:6px;
+    padding:12px 24px;
+    cursor:pointer;
+    transition:transform .15s ease;
   }
-  button:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
-  button:active { transform: scale(0.97); }
-  .btn-primary { background: var(--accent); color: var(--btn-text); }
-  .btn-primary:hover { background: var(--brass-light); }
-  .btn-primary:disabled { opacity: 0.4; cursor: not-allowed; }
-  .status { font-size: 13px; color: var(--accent-2); margin-top: 10px; min-height: 16px; }
+  button:focus-visible{outline:2px solid var(--accent);outline-offset:2px;}
+  button:active{transform:scale(0.97);}
+  .btn-primary{
+    background:linear-gradient(160deg, #d9b982, var(--accent) 60%, #6b4a24);
+    color:var(--btn-text);
+    text-shadow:0 1px 0 rgba(255,255,255,0.25);
+    box-shadow:inset 0 1px 1px rgba(255,255,255,0.4), inset 0 -2px 3px rgba(0,0,0,0.3), 0 3px 8px rgba(0,0,0,0.3);
+    letter-spacing:0.02em;
+  }
+  .btn-primary:hover{filter:brightness(1.08);}
+  .btn-primary:disabled{opacity:0.4;cursor:not-allowed;}
+  .status{font-size:13px;color:var(--cream);opacity:0.7;margin-top:10px;min-height:16px;}
 
-  /* ---- Turntable Deck ---- */
-  .deck {
-    display: none;
-    position: relative;
-    /* Composite gradient for the plinth, dynamically updated */
+  /* ---- Turntable ---- */
+  .deck{
+    display:none;
+    position:relative;
+    padding:36px 8px 28px;
+    overflow:visible;
+  }
+  .deck.show{display:block;}
+  .scene{
+    display:flex;
+    align-items:flex-end;
+    justify-content:center;
+    gap:22px;
+    margin-bottom:22px;
+  }
+  .mug{width:48px;flex-shrink:0;padding-bottom:4px;}
+  .mug svg{width:100%;overflow:visible;}
+  .steam path{
+    stroke:var(--steam);
+    stroke-width:3;
+    stroke-linecap:round;
+    fill:none;
+    opacity:0;
+    transform-origin:bottom center;
+    animation:steam 3.6s ease-in infinite;
+  }
+  .steam path:nth-child(2){animation-delay:.8s;}
+  .steam path:nth-child(3){animation-delay:1.6s;}
+  @keyframes steam{
+    0%{opacity:0;transform:translateY(0) scaleY(0.8);}
+    15%{opacity:.9;}
+    75%{opacity:.2;}
+    100%{opacity:0;transform:translateY(-22px) scaleY(1.15);}
+  }
+  .plinth{
+    position:relative;
+    width:240px;height:240px;
+    flex-shrink:0;
+  }
+  .platter{
+    width:240px;height:240px;
+    border-radius:50%;
+    background:radial-gradient(circle at 50% 50%, #1c130a 0 26%, #0e0904 27% 100%);
+    position:relative;
+    box-shadow:inset 0 0 0 6px rgba(0,0,0,0.4), 0 8px 24px rgba(0,0,0,0.5);
+  }
+  .record{
+    position:absolute;top:10px;left:10px;
+    width:220px;height:220px;
+    border-radius:50%;
+    background-image:url('vinyl-record.jpg');
+    background-size:cover;
+    background-position:center;
+    box-shadow:0 0 0 1px rgba(255,255,255,0.06), inset 0 0 30px rgba(0,0,0,0.35);
+    overflow:hidden;
+    opacity:0;
+    transform:scale(0.9);
+    transition:opacity .4s ease, transform .4s ease;
+  }
+  .record.on{opacity:1;transform:scale(1);}
+  .record.spin{animation:spin 3.2s linear infinite;}
+  @keyframes spin{to{transform:rotate(360deg);}}
+  .groove-text{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;}
+  .groove-text text{
+    font-family:'Caveat',cursive;
+    font-size:11.5px;
+    fill:var(--cream);
+    opacity:0.7;
+    letter-spacing:1px;
+  }
+  .label{
+    position:absolute;left:30%;top:56%;transform:translate(-50%,-50%);
+    width:58px;height:58px;border-radius:50%;
     background:
-      radial-gradient(circle at 50% 15%, rgba(255,255,255,0.25), transparent 55%),
-      linear-gradient(160deg, var(--plank), var(--wood-dark));
-    border-radius: 18px;
-    padding: 36px 28px 28px;
-    border: 1px solid var(--card-border);
-    box-shadow: 0 20px 50px var(--shadow);
-    overflow: hidden;
+      radial-gradient(circle at 40% 35%, rgba(255,255,255,0.35), transparent 45%),
+      repeating-radial-gradient(circle, rgba(0,0,0,0.05) 0 1px, transparent 1px 3px),
+      radial-gradient(circle, #d9b072, var(--accent) 70%);
+    display:flex;align-items:center;justify-content:center;
+    overflow:hidden;
+    box-shadow:
+      0 0 0 1px rgba(0,0,0,0.3),
+      0 0 0 3px #cbbfa8,
+      0 0 0 4px rgba(0,0,0,0.25),
+      inset 0 1px 2px rgba(255,255,255,0.4);
   }
-  .deck.show { display: block; }
+  .label img{width:100%;height:100%;object-fit:cover;border-radius:50%;}
+  .spindle{
+    position:absolute;top:56%;left:30%;
+    width:8px;height:8px;background:var(--brass-light);
+    border-radius:50%;transform:translate(-50%,-50%);
+    box-shadow:0 0 0 1px var(--felt);
+    z-index:2;
+  }
+  .tonearm{
+    position:absolute;
+    top:-14px;right:-30px;
+    width:110px;height:110px;
+    transform-origin:88px 22px;
+    transform:rotate(-32deg);
+    transition:transform .6s cubic-bezier(.4,0,.2,1);
+    cursor:grab;
+    touch-action:none;
+    z-index:3;
+  }
+  .tonearm.down{transform:rotate(-8deg);}
+  .tonearm svg{width:100%;height:100%;overflow:visible;}
 
-  /* Elements Scene (Mug + Tonearm) */
-  .scene {
-    display: flex;
-    align-items: flex-end;
-    justify-content: center;
-    gap: 22px;
-    margin-bottom: 22px;
+  .now{
+    text-align:center;
+    margin-bottom:22px;
   }
+  .now .track{font-family:'Fraunces',serif;font-size:19px;font-weight:600;color:var(--cream);}
+  .now .artist{font-size:13.5px;color:var(--brass);margin-top:2px;}
+  .transport{display:flex;justify-content:center;align-items:center;gap:26px;margin-bottom:8px;}
+  .icon-btn{
+    width:auto;height:auto;
+    background:none;
+    border:none;
+    color:var(--cream);
+    display:flex;align-items:center;justify-content:center;
+    cursor:pointer;
+    padding:4px;
+    opacity:0.8;
+    filter:drop-shadow(0 1px 3px rgba(0,0,0,0.4));
+    transition:opacity .15s ease, transform .15s ease;
+  }
+  .icon-btn svg{stroke:var(--cream);fill:var(--cream);}
+  .icon-btn:hover{opacity:1;transform:scale(1.12);}
+  .icon-btn#playBtn svg{width:22px;height:22px;}
+  .icon-btn#prevBtn svg,.icon-btn#nextBtn svg{width:18px;height:18px;}
 
-  /* Mug with Steam */
-  .mug { width: 48px; flex-shrink: 0; padding-bottom: 4px; }
-  .mug svg { width: 100%; overflow: visible; }
-  .steam path {
-    stroke: var(--steam);
-    stroke-width: 3;
-    stroke-linecap: round;
-    fill: none;
-    opacity: 0;
-    transform-origin: bottom center;
-    animation: steam 3.6s ease-in infinite;
+  .candle{position:absolute;width:20px;pointer-events:none;}
+  .candle.c1{left:6px;bottom:8px;}
+  .candle.c2{right:10px;bottom:14px;width:16px;}
+  .candle svg{width:100%;overflow:visible;}
+  .flame{
+    transform-origin:bottom center;
+    animation:flicker 2.6s ease-in-out infinite;
   }
-  .steam path:nth-child(2) { animation-delay: .8s; }
-  .steam path:nth-child(3) { animation-delay: 1.6s; }
-  @keyframes steam {
-    0% { opacity: 0; transform: translateY(0) scaleY(0.8); }
-    15% { opacity: .9; }
-    75% { opacity: .2; }
-    100% { opacity: 0; transform: translateY(-22px) scaleY(1.15); }
-  }
-
-  /* Turntable Plinth and Record */
-  .plinth {
-    position: relative;
-    width: 240px; height: 240px;
-    flex-shrink: 0;
-  }
-  .platter {
-    width: 240px; height: 240px;
-    border-radius: 50%;
-    background: radial-gradient(circle at 50% 50%, #1c130a 0 26%, #0e0904 27% 100%);
-    position: relative;
-    box-shadow: inset 0 0 0 6px rgba(0,0,0,0.4), 0 8px 24px rgba(0,0,0,0.5);
-  }
-  .record {
-    position: absolute; top: 10px; left: 10px;
-    width: 220px; height: 220px;
-    border-radius: 50%;
-    /* Note: 'vinyl-record.jpg' is a placeholder asset required for the record image */
-    background-image: url('vinyl-record.jpg');
-    background-size: cover;
-    background-position: center;
-    box-shadow: 0 0 0 1px rgba(255,255,255,0.06), inset 0 0 30px rgba(0,0,0,0.35);
-    overflow: hidden;
-    opacity: 0;
-    transform: scale(0.9);
-    transition: opacity .4s ease, transform .4s ease;
-  }
-  .record.on { opacity: 1; transform: scale(1); }
-  .record.spin { animation: spin 3.2s linear infinite; }
-  @keyframes spin { to { transform: rotate(360deg); } }
-
-  /* SVG Groove Text */
-  .groove-text { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; }
-  .groove-text text {
-    font-family: 'Caveat', cursive;
-    font-size: 11.5px;
-    fill: var(--cream);
-    opacity: 0.7;
-    letter-spacing: 1px;
+  @keyframes flicker{
+    0%,100%{transform:scaleY(1) rotate(0deg);opacity:1;}
+    25%{transform:scaleY(1.08) rotate(-2deg);opacity:.92;}
+    50%{transform:scaleY(0.94) rotate(2deg);opacity:1;}
+    75%{transform:scaleY(1.05) rotate(-1deg);opacity:.95;}
   }
 
-  /* Record Label and Spindle */
-  .label {
-    position: absolute; left: 30%; top: 56%; transform: translate(-50%, -50%);
-    width: 58px; height: 58px; border-radius: 50%;
-    background: var(--accent);
-    display: flex; align-items: center; justify-content: center;
-    overflow: hidden;
-    box-shadow: 0 0 0 3px #cbbfa8, 0 0 0 4px var(--felt);
+  /* ---- Crate ---- */
+  .crate-heading{
+    font-family:'Caveat',cursive;
+    font-size:22px;font-weight:600;
+    margin:34px 0 -6px 18px;
+    color:var(--cream);
+    position:relative;
+    z-index:1;
+    display:inline-block;
+    background:var(--wood-dark);
+    padding:4px 14px 10px;
+    border-radius:8px 8px 0 0;
   }
-  .label img { width: 100%; height: 100%; object-fit: cover; }
-  .spindle {
-    position: absolute; top: 56%; left: 30%;
-    width: 8px; height: 8px; background: var(--brass-light);
-    border-radius: 50%; transform: translate(-50%, -50%);
-    box-shadow: 0 0 0 1px var(--felt);
-    z-index: 2;
-  }
-
-  /* Tonearm and S-curve */
-  .tonearm {
-    position: absolute;
-    top: -14px; right: -30px;
-    width: 110px; height: 110px;
-    transform-origin: 88px 22px;
-    transform: rotate(-32deg);
-    transition: transform .6s cubic-bezier(.4, 0, .2, 1);
-    cursor: grab;
-    touch-action: none;
-    z-index: 3;
-  }
-  .tonearm.down { transform: rotate(-8deg); }
-  .tonearm svg { width: 100%; height: 100%; overflow: visible; }
-
-  /* Now Playing Info */
-  .now {
-    text-align: center;
-    margin-bottom: 22px;
-  }
-  .now .track { font-family: 'Fraunces', serif; font-size: 19px; font-weight: 600; color: var(--cream); }
-  .now .artist { font-size: 13.5px; color: var(--brass); margin-top: 2px; }
-
-  /* Transport Controls */
-  .transport { display: flex; justify-content: center; gap: 14px; margin-bottom: 8px; }
-  .icon-btn {
-    width: 44px; height: 44px; border-radius: 50%;
-    background: rgba(255,255,255,0.1);
-    border: 1px solid rgba(255,255,255,0.15);
-    color: var(--cream);
-    display: flex; align-items: center; justify-content: center;
-    cursor: pointer;
-    font-size: 16px;
-    transition: background 0.2s;
-  }
-  .icon-btn:hover { background: rgba(255,255,255,0.18); }
-
-  /* Flicker Candles */
-  .candle { position: absolute; width: 20px; pointer-events: none; }
-  .candle.c1 { left: 6px; bottom: 8px; }
-  .candle.c2 { right: 10px; bottom: 14px; width: 16px; }
-  .candle svg { width: 100%; overflow: visible; }
-  .flame {
-    fill: var(--flame);
-    transform-origin: bottom center;
-    animation: flicker 2.6s ease-in-out infinite;
-  }
-  @keyframes flicker {
-    0%, 100% { transform: scaleY(1) rotate(0deg); opacity: 1; }
-    25% { transform: scaleY(1.08) rotate(-2deg); opacity: .92; }
-    50% { transform: scaleY(0.94) rotate(2deg); opacity: 1; }
-    75% { transform: scaleY(1.05) rotate(-1deg); opacity: .95; }
-  }
-
-  /* ---- Crate and Woven Basket ---- */
-  .crate-heading {
-    font-family: 'Fraunces', serif;
-    font-size: 18px; font-weight: 600;
-    margin: 34px 0 14px;
-    color: var(--ink);
-  }
-  .crate-basket {
+  .crate-basket{
     background:
-      repeating-linear-gradient(45deg, rgba(0,0,0,0.08) 0 3px, transparent 3px 9px),
-      repeating-linear-gradient(-45deg, rgba(0,0,0,0.06) 0 3px, transparent 3px 9px),
-      linear-gradient(160deg, #b98f5e, #8a6238);
-    border-radius: 16px;
-    padding: 16px;
-    border: 1px solid rgba(0,0,0,0.15);
-    box-shadow: inset 0 2px 6px rgba(0,0,0,0.25), 0 10px 24px var(--shadow);
+      repeating-linear-gradient(45deg, rgba(0,0,0,0.12) 0 2px, transparent 2px 7px),
+      repeating-linear-gradient(-45deg, rgba(0,0,0,0.1) 0 2px, transparent 2px 7px),
+      repeating-linear-gradient(90deg, rgba(255,255,255,0.05) 0 1px, transparent 1px 8px),
+      linear-gradient(160deg, #c19a68, #8a6238);
+    border-radius:14px;
+    padding:16px;
+    box-shadow:inset 0 3px 10px rgba(0,0,0,0.35), inset 0 -2px 4px rgba(255,255,255,0.08), 0 14px 28px var(--shadow);
   }
-  .crate {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
-    gap: 12px;
+  .crate{
+    display:grid;
+    grid-template-columns:repeat(auto-fill,minmax(130px,1fr));
+    gap:14px;
   }
+  .sleeve{
+    background:none;
+    border:none;
+    padding:0;
+    cursor:pointer;
+    text-align:left;
+    transition:transform .15s ease;
+  }
+  .sleeve:hover{transform:translateY(-4px);}
+  .sleeve.active img{box-shadow:0 0 0 2px var(--accent), 0 6px 16px rgba(0,0,0,0.4);}
+  .sleeve img{width:100%;aspect-ratio:1;object-fit:cover;border-radius:4px;margin-bottom:8px;background:var(--felt);box-shadow:0 4px 10px rgba(0,0,0,0.3);}
+  .sleeve .name{font-size:13px;font-weight:600;line-height:1.3;color:#2b1c10;}
+  .sleeve .count{font-size:11.5px;color:#4a3320;opacity:0.75;margin-top:2px;}
 
-  /* Record Sleeves */
-  .sleeve {
-    background: var(--card-bg);
-    border: 1px solid var(--card-border);
-    border-radius: 10px;
-    padding: 10px;
-    cursor: pointer;
-    text-align: left;
-    transition: transform .15s ease, border-color .15s ease, box-shadow 0.15s;
-    backdrop-filter: blur(4px);
-  }
-  .sleeve:hover { transform: translateY(-3px); border-color: var(--accent); }
-  .sleeve.active { border-color: var(--accent); box-shadow: 0 0 0 1px var(--accent); }
-  .sleeve img { width: 100%; aspect-ratio: 1; object-fit: cover; border-radius: 6px; margin-bottom: 8px; background: var(--felt); }
-  .sleeve .name { font-size: 13px; font-weight: 600; line-height: 1.3; color: var(--cream); }
-  .sleeve .count { font-size: 11.5px; color: var(--cream); opacity: 0.7; margin-top: 2px; }
-
-  .empty { color: var(--cream); opacity: 0.75; font-size: 13.5px; grid-column: 1/-1; text-align: center; padding: 20px 0; }
+  .empty{color:#2b1c10;opacity:0.75;font-size:13.5px;grid-column:1/-1;text-align:center;padding:20px 0;}
 </style>
 </head>
 <body>
-<!-- Timescape Mode Toggle Button -->
 <button class="mode-toggle" id="modeToggle" title="Toggle morning/evening" aria-label="Toggle morning or evening mode">☀️</button>
-
 <div class="wrap">
   <p class="greeting" id="greeting">good morning</p>
   <h1>Crate</h1>
   <p class="sub">Your Spotify playlists, reimagined as a record collection. Pick a sleeve, drop the needle.</p>
 
-  <!-- Connect Card -->
   <div class="card" id="setupCard">
     <h2>Connect your Spotify</h2>
     <p class="hint">
@@ -389,26 +377,22 @@
     <p class="hint" style="margin-top:14px;margin-bottom:0;">Needs a Spotify <strong>Premium</strong> account for actual playback — free accounts can browse but Spotify blocks streaming through the Web Playback SDK.</p>
   </div>
 
-  <!-- Turntable Deck (Hidden initially) -->
   <div class="deck" id="deck">
-    <!-- Animated Candles -->
     <div class="candle c1">
       <svg viewBox="0 0 20 50">
         <rect x="4" y="14" width="12" height="36" rx="2" fill="var(--cream)" opacity="0.9"/>
-        <ellipse class="flame" cx="10" cy="8" rx="4" ry="8"/>
+        <ellipse class="flame" cx="10" cy="8" rx="4" ry="8" fill="var(--flame)"/>
         <ellipse class="flame" cx="10" cy="9" rx="2" ry="4.5" fill="#fff3d6" opacity="0.85"/>
       </svg>
     </div>
     <div class="candle c2">
       <svg viewBox="0 0 20 50">
         <rect x="4" y="20" width="12" height="30" rx="2" fill="var(--cream)" opacity="0.9"/>
-        <ellipse class="flame" cx="10" cy="14" rx="3.5" ry="7"/>
+        <ellipse class="flame" cx="10" cy="14" rx="3.5" ry="7" fill="var(--flame)"/>
         <ellipse class="flame" cx="10" cy="15" rx="1.8" ry="4" fill="#fff3d6" opacity="0.85"/>
       </svg>
     </div>
-
     <div class="scene">
-      <!-- Steaming Mug -->
       <div class="mug">
         <svg viewBox="0 0 70 90">
           <g class="steam">
@@ -421,12 +405,9 @@
           <path d="M58 54 q14 2 12 16 q-2 12 -14 10" fill="none" stroke="var(--accent-2)" stroke-width="5"/>
         </svg>
       </div>
-
-      <!-- Plinth and Record Area -->
       <div class="plinth">
         <div class="platter">
           <div class="record" id="record">
-            <!-- SVG Groove Text (Path-based) -->
             <svg class="groove-text" viewBox="0 0 220 220">
               <path id="textArc" d="M 66,123 m -62,0 a 62,62 0 1,1 124,0 a 62,62 0 1,1 -124,0" fill="none"/>
               <text>
@@ -434,12 +415,9 @@
               </text>
             </svg>
             <div class="spindle"></div>
-            <!-- Dynamic Album Art Label -->
             <div class="label" id="recordLabel"></div>
           </div>
         </div>
-
-        <!-- Draggable Tonearm -->
         <div class="tonearm" id="tonearm">
           <svg viewBox="0 0 110 110">
             <defs>
@@ -463,20 +441,23 @@
         </div>
       </div>
     </div>
-
-    <!-- UI Info and Controls -->
     <div class="now" id="nowPlaying">
       <div class="track">Nothing on the platter yet</div>
       <div class="artist">Pick a record from your crate below</div>
     </div>
     <div class="transport">
-      <button class="icon-btn" id="prevBtn" title="Previous">⏮</button>
-      <button class="icon-btn" id="playBtn" title="Play/Pause">▶</button>
-      <button class="icon-btn" id="nextBtn" title="Next">⏭</button>
+      <button class="icon-btn" id="prevBtn" title="Previous">
+        <svg viewBox="0 0 24 24"><path d="M6 5v14M20 6 8 12l12 6z"/></svg>
+      </button>
+      <button class="icon-btn" id="playBtn" title="Play/Pause">
+        <svg viewBox="0 0 24 24" id="playIcon"><path d="M6 4l14 8-14 8z"/></svg>
+      </button>
+      <button class="icon-btn" id="nextBtn" title="Next">
+        <svg viewBox="0 0 24 24"><path d="M18 5v14M4 6l12 6-12 6z"/></svg>
+      </button>
     </div>
   </div>
 
-  <!-- Crate Basket -->
   <div class="crate-heading" id="crateHeading" style="display:none;">Your crate</div>
   <div class="crate-basket">
     <div class="crate" id="crate"></div>
@@ -485,80 +466,46 @@
 
 <script src="https://sdk.scdn.co/spotify-player.js"></script>
 <script>
-/* ---------- Timescape Theme Logic ---------- */
+/* ---------- time-of-day mode ---------- */
 const modeToggle = document.getElementById('modeToggle');
 const greeting = document.getElementById('greeting');
-
-// Define time ranges and icons for different periods
 const PERIODS = [
-  { key: 'dawn',      icon: '🌅', label: 'dawn',      hours: [5, 7] },
-  { key: 'morning',   icon: '☀️', label: 'morning',   hours: [7, 12] },
-  { key: 'afternoon', icon: '🌤️', label: 'afternoon', hours: [12, 17] },
-  { key: 'dusk',      icon: '🌇', label: 'dusk',      hours: [17, 19] },
-  { key: 'night',     icon: '🌙', label: 'night',     hours: [19, 29] } // 19:00 to 05:00 next day
+  { key:'dawn',      icon:'🌅', label:'dawn',      hours:[5,7]   },
+  { key:'morning',   icon:'☀️', label:'morning',   hours:[7,12]  },
+  { key:'afternoon', icon:'🌤️', label:'afternoon', hours:[12,17] },
+  { key:'dusk',      icon:'🌇', label:'dusk',      hours:[17,19] },
+  { key:'night',     icon:'🌙', label:'night',     hours:[19,29] } // wraps past midnight
 ];
-
-// Contextual Greetings
-const greetings = {
-  dawn:      'early start ☕',
-  morning:   'good morning ☕',
-  afternoon: 'good afternoon ☕',
-  dusk:      'good evening ☕',
-  night:     'still up? ☕'
-};
-
-function getPeriodForHour(h) {
-  const hh = h < 5 ? h + 24 : h; // Treat 00:00-04:59 as late night
-  return PERIODS.find(p => hh >= p.hours[0] && hh < p.hours[1]) || PERIODS[4]; // Default to night
+function periodForHour(h){
+  const hh = h < 5 ? h + 24 : h; // treat 0-4am as continuation of night
+  return PERIODS.find(p => hh >= p.hours[0] && hh < p.hours[1]) || PERIODS[4];
 }
+let periodIndex = PERIODS.indexOf(periodForHour(new Date().getHours()));
 
-// Set initial state based on current time
-const initialHour = new Date().getHours();
-let periodIndex = PERIODS.indexOf(getPeriodForHour(initialHour));
-
-// Manual override flag
-let manualThemeSet = false;
-
-function applyTheme() {
+function applyTheme(){
   const p = PERIODS[periodIndex];
   document.documentElement.setAttribute('data-theme', p.key);
   modeToggle.textContent = p.icon;
-  modeToggle.title = 'Current Timescape: ' + p.label + ' (click to cycle)';
+  modeToggle.title = 'Time of day: ' + p.label + ' (click to change)';
+  const greetings = {
+    dawn:'early start ☕', morning:'good morning ☕', afternoon:'good afternoon ☕',
+    dusk:'good evening ☕', night:'still up? ☕'
+  };
   greeting.textContent = greetings[p.key];
 }
-
-// Click to manually cycle through themes
-modeToggle.addEventListener('click', () => {
-  manualThemeSet = true; // Disable automatic updates
+modeToggle.addEventListener('click', ()=>{
   periodIndex = (periodIndex + 1) % PERIODS.length;
   applyTheme();
 });
-
-// Automatic update check (every 5 minutes)
-function autoCheckTheme() {
-  if (manualThemeSet) return; // Don't interrupt manual selection
-  const currentHour = new Date().getHours();
-  const currentPeriod = getPeriodForHour(currentHour);
-  const newIndex = PERIODS.indexOf(currentPeriod);
-  
-  if (newIndex !== periodIndex) {
-    periodIndex = newIndex;
-    applyTheme();
-  }
-}
-
-// Set initial theme and start auto-checker
 applyTheme();
-setInterval(autoCheckTheme, 5 * 60 * 1000); // 5 minutes
 
-
-/* ---------- Existing Spotify Logic (Configured) ---------- */
+/* ---------- config ---------- */
 const REDIRECT_URI = location.origin + location.pathname;
 document.getElementById('redirectDisplay').textContent = REDIRECT_URI;
 const SCOPES = [
-  'streaming', 'user-read-email', 'user-read-private',
-  'user-read-playback-state', 'user-modify-playback-state',
-  'playlist-read-private', 'playlist-read-collaborative',
+  'streaming','user-read-email','user-read-private',
+  'user-read-playback-state','user-modify-playback-state',
+  'playlist-read-private','playlist-read-collaborative',
   'user-library-read'
 ].join(' ');
 
@@ -579,36 +526,33 @@ let player = null;
 let deviceId = null;
 let isPlaying = false;
 
-// PKCE Authorization flow helpers
-function randomString(len) {
-  const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-  let out = '';
-  const arr = new Uint8Array(len);
+/* ---------- PKCE helpers ---------- */
+function randomString(len){
+  const chars='ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+  let out='';
+  const arr=new Uint8Array(len);
   crypto.getRandomValues(arr);
-  for (let i = 0; i < len; i++) out += chars[arr[i] % chars.length];
+  for(let i=0;i<len;i++) out+=chars[arr[i]%chars.length];
   return out;
 }
-async function sha256(plain) {
-  const data = new TextEncoder().encode(plain);
-  return crypto.subtle.digest('SHA-256', data);
+async function sha256(plain){
+  const data=new TextEncoder().encode(plain);
+  return crypto.subtle.digest('SHA-256',data);
 }
-function base64urlencode(buf) {
+function base64urlencode(buf){
   return btoa(String.fromCharCode(...new Uint8Array(buf)))
-    .replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, '');
+    .replace(/\+/g,'-').replace(/\//g,'_').replace(/=+$/,'');
 }
 
-// Connect Button Click
-document.getElementById('connectBtn').addEventListener('click', async () => {
+document.getElementById('connectBtn').addEventListener('click', async ()=>{
   const clientId = document.getElementById('clientId').value.trim();
-  if (!clientId) { statusMsg.textContent = 'Paste your Spotify Client ID first.'; return; }
+  if(!clientId){ statusMsg.textContent='Paste your Spotify Client ID first.'; return; }
   sessionStorage.setItem('vinyl_client_id', clientId);
 
-  // PKCE security setup
   const verifier = randomString(64);
   sessionStorage.setItem('vinyl_pkce_verifier', verifier);
   const challenge = base64urlencode(await sha256(verifier));
 
-  // Redirect to Spotify login
   const params = new URLSearchParams({
     client_id: clientId,
     response_type: 'code',
@@ -620,21 +564,20 @@ document.getElementById('connectBtn').addEventListener('click', async () => {
   location.href = 'https://accounts.spotify.com/authorize?' + params.toString();
 });
 
-// Handle Redirect callback from Spotify
-async function handleRedirect() {
+/* ---------- handle redirect back from Spotify ---------- */
+async function handleRedirect(){
   const url = new URL(location.href);
   const code = url.searchParams.get('code');
-  if (!code) return;
+  if(!code) return;
 
   const clientId = sessionStorage.getItem('vinyl_client_id');
   const verifier = sessionStorage.getItem('vinyl_pkce_verifier');
-  if (!clientId || !verifier) {
+  if(!clientId || !verifier){
     statusMsg.textContent = 'Session expired mid-login — enter your Client ID and try connecting again.';
     return;
   }
   statusMsg.textContent = 'Finishing login…';
 
-  // Swap authorization code for access token
   const body = new URLSearchParams({
     client_id: clientId,
     grant_type: 'authorization_code',
@@ -643,17 +586,15 @@ async function handleRedirect() {
     code_verifier: verifier
   });
 
-  const res = await fetch('https://accounts.spotify.com/api/token', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+  const res = await fetch('https://accounts.spotify.com/api/token',{
+    method:'POST',
+    headers:{'Content-Type':'application/x-www-form-urlencoded'},
     body
   });
   const data = await res.json();
-  
-  // Clean URL of code parameter
   window.history.replaceState({}, document.title, REDIRECT_URI);
 
-  if (data.access_token) {
+  if(data.access_token){
     accessToken = data.access_token;
     startApp();
   } else {
@@ -661,210 +602,206 @@ async function handleRedirect() {
   }
 }
 
-function startApp() {
-  setupCard.style.display = 'none';
+/* ---------- app start ---------- */
+function startApp(){
+  setupCard.style.display='none';
   deck.classList.add('show');
-  crateHeading.style.display = 'block';
+  crateHeading.style.display='block';
   loadPlaylists();
   initPlayer();
 }
 
-// Fetch user data and populate crate
-async function loadPlaylists() {
+async function loadPlaylists(){
   crate.innerHTML = '<p class="empty">Pulling your music…</p>';
 
   const [playlistsRes, likedRes] = await Promise.all([
-    fetch('https://api.spotify.com/v1/me/playlists?limit=30', { headers: { Authorization: 'Bearer ' + accessToken } }),
-    fetch('https://api.spotify.com/v1/me/tracks?limit=1', { headers: { Authorization: 'Bearer ' + accessToken } })
+    fetch('https://api.spotify.com/v1/me/playlists?limit=30',{headers:{Authorization:'Bearer '+accessToken}}),
+    fetch('https://api.spotify.com/v1/me/tracks?limit=1',{headers:{Authorization:'Bearer '+accessToken}})
   ]);
   const playlistsData = await playlistsRes.json();
   const likedData = await likedRes.json();
 
-  crate.innerHTML = '';
+  crate.innerHTML='';
 
-  // Add "Liked Songs" first
-  if (likedData.total > 0) {
+  // Liked Songs first, since Spotify doesn't include it in /me/playlists at all
+  if(likedData.total > 0){
     const div = document.createElement('div');
-    div.className = 'sleeve';
+    div.className='sleeve';
     div.innerHTML = `
       <img src="" alt="" style="visibility:hidden">
       <div class="name">💚 Liked Songs</div>
       <div class="count">${likedData.total} tracks</div>
     `;
-    div.addEventListener('click', () => playLikedSongs(div));
+    div.addEventListener('click', ()=>playLikedSongs(div));
     crate.appendChild(div);
   }
 
-  // Populate actual playlists
   const validPlaylists = (playlistsData.items || []).filter(pl => pl && pl.tracks);
-  validPlaylists.forEach(pl => {
+  validPlaylists.forEach(pl=>{
     const img = pl.images && pl.images[0] ? pl.images[0].url : '';
     const div = document.createElement('div');
-    div.className = 'sleeve';
+    div.className='sleeve';
     div.innerHTML = `
       <img src="${img}" alt="" onerror="this.style.visibility='hidden'">
       <div class="name">${pl.name}</div>
       <div class="count">${pl.tracks.total} tracks</div>
     `;
-    div.addEventListener('click', () => playPlaylist(pl, div, img));
+    div.addEventListener('click', ()=>playPlaylist(pl, div, img));
     crate.appendChild(div);
   });
 
-  if (!validPlaylists.length && !(likedData.total > 0)) {
+  if(!validPlaylists.length && !(likedData.total > 0)){
     crate.innerHTML = '<p class="empty">No playlists or liked songs found on this account.</p>';
   }
 }
 
-// Spotify Web Playback SDK Setup
 let spotifySdkReady = false;
-window.onSpotifyWebPlaybackSDKReady = () => { spotifySdkReady = true; };
+window.onSpotifyWebPlaybackSDKReady = ()=>{ spotifySdkReady = true; };
 
-function initPlayer() {
-  const setupPlayer = () => {
+function initPlayer(){
+  const setupPlayer = ()=>{
     player = new Spotify.Player({
       name: 'Crate — Vinyl Simulator',
       getOAuthToken: cb => cb(accessToken),
       volume: 0.8
     });
 
-    player.addListener('ready', ({ device_id }) => {
+    player.addListener('ready', ({device_id})=>{
       deviceId = device_id;
-      statusMsg.textContent = '';
+      statusMsg.textContent='';
     });
 
-    // Handle state changes (Play/Pause, Track update)
-    player.addListener('player_state_changed', state => {
-      if (!state) return;
+    player.addListener('player_state_changed', state=>{
+      if(!state) return;
       isPlaying = !state.paused;
-      playBtn.textContent = isPlaying ? '⏸' : '▶';
-      
-      // Update visual animations
+      document.getElementById('playIcon').innerHTML = isPlaying
+        ? '<path d="M6 4h4v16H6zM14 4h4v16h-4z"/>'
+        : '<path d="M6 4l14 8-14 8z"/>';
       recordEl.classList.toggle('spin', isPlaying);
       tonearm.classList.toggle('down', isPlaying);
-
       const track = state.track_window.current_track;
-      if (track) {
+      if(track){
         nowPlaying.querySelector('.track').textContent = track.name;
-        nowPlaying.querySelector('.artist').textContent = track.artists.map(a => a.name).join(', ');
-        // Update engraved groove text
-        trackArcText.textContent = track.name + '  ♥  ' + track.artists.map(a => a.name).join(', ') + '  ♥  ';
+        nowPlaying.querySelector('.artist').textContent = track.artists.map(a=>a.name).join(', ');
+        trackArcText.textContent = track.name + '  ♥  ' + track.artists.map(a=>a.name).join(', ') + '  ♥  ';
       }
     });
 
-    player.addListener('account_error', () => statusMsg.textContent = 'Spotify Premium is required for playback SDK.');
+    player.addListener('initialization_error', ({message})=> statusMsg.textContent='Init error: '+message);
+    player.addListener('authentication_error', ({message})=> statusMsg.textContent='Auth error: '+message);
+    player.addListener('account_error', ({message})=> statusMsg.textContent='Account error: Spotify Premium is required. '+message);
+
     player.connect();
   };
 
-  if (spotifySdkReady && window.Spotify) {
+  if(spotifySdkReady && window.Spotify){
     setupPlayer();
   } else {
-    // Poll for SDK ready state if not immediately available
-    window.onSpotifyWebPlaybackSDKReady = () => { spotifySdkReady = true; setupPlayer(); };
+    window.onSpotifyWebPlaybackSDKReady = ()=>{ spotifySdkReady = true; setupPlayer(); };
   }
 }
 
-// Playback Trigger Functions
-async function playLikedSongs(sleeveEl) {
-  setActiveSleeve(sleeveEl);
+async function playLikedSongs(sleeveEl){
+  document.querySelectorAll('.sleeve').forEach(s=>s.classList.remove('active'));
+  sleeveEl.classList.add('active');
   recordLabel.innerHTML = '💚';
   recordLabel.style.fontSize = '28px';
-  startRecordVisuals('Liked Songs');
+  recordEl.classList.add('on');
+  trackArcText.textContent = 'Liked Songs  ♥  ';
+  nowPlaying.querySelector('.track').textContent = 'Liked Songs';
+  nowPlaying.querySelector('.artist').textContent = 'Dropping the needle…';
 
-  // Spotify requires track URIs to play, we fetch first 50 liked songs
-  const res = await fetch('https://api.spotify.com/v1/me/tracks?limit=50', {
-    headers: { Authorization: 'Bearer ' + accessToken }
+  if(!deviceId){
+    statusMsg.textContent = 'Player still connecting — try again in a second.';
+    return;
+  }
+
+  const res = await fetch('https://api.spotify.com/v1/me/tracks?limit=50',{
+    headers:{Authorization:'Bearer '+accessToken}
   });
   const data = await res.json();
-  const uris = (data.items || []).map(it => it.track.uri);
-  playSpotifyUris({ uris });
-}
+  const uris = (data.items || []).filter(it => it && it.track).map(it => it.track.uri);
+  if(!uris.length) return;
 
-async function playPlaylist(pl, sleeveEl, img) {
-  setActiveSleeve(sleeveEl);
-  recordLabel.style.fontSize = '';
-  recordLabel.innerHTML = img ? `<img src="${img}" alt="">` : '';
-  startRecordVisuals(pl.name);
-  // Context URI plays the whole playlist
-  playSpotifyUris({ context_uri: pl.uri });
-}
-
-// Shared UI helpers
-function setActiveSleeve(sleeveEl) {
-  document.querySelectorAll('.sleeve').forEach(s => s.classList.remove('active'));
-  sleeveEl.classList.add('active');
-}
-function startRecordVisuals(name) {
-  recordEl.classList.add('on');
-  trackArcText.textContent = name + '  ♥  ';
-  nowPlaying.querySelector('.track').textContent = name;
-  nowPlaying.querySelector('.artist').textContent = 'Dropping the needle…';
-}
-function playSpotifyUris(body) {
-  if (!deviceId) return;
-  fetch(`https://api.spotify.com/v1/me/player/play?device_id=${deviceId}`, {
-    method: 'PUT',
-    headers: { Authorization: 'Bearer ' + accessToken, 'Content-Type': 'application/json' },
-    body: JSON.stringify(body)
+  await fetch(`https://api.spotify.com/v1/me/player/play?device_id=${deviceId}`,{
+    method:'PUT',
+    headers:{Authorization:'Bearer '+accessToken,'Content-Type':'application/json'},
+    body: JSON.stringify({uris})
   });
 }
 
-// Basic Transport Events
-playBtn.addEventListener('click', () => player && player.togglePlay());
-document.getElementById('nextBtn').addEventListener('click', () => player && player.nextTrack());
-document.getElementById('prevBtn').addEventListener('click', () => player && player.previousTrack());
+async function playPlaylist(pl, sleeveEl, img){
+  document.querySelectorAll('.sleeve').forEach(s=>s.classList.remove('active'));
+  sleeveEl.classList.add('active');
+  recordLabel.style.fontSize = '';
+  recordLabel.innerHTML = img ? `<img src="${img}" alt="">` : '';
+  recordEl.classList.add('on');
+  trackArcText.textContent = pl.name + '  ♥  ';
+  nowPlaying.querySelector('.track').textContent = pl.name;
+  nowPlaying.querySelector('.artist').textContent = 'Dropping the needle…';
 
-/* ---------- Draggable Tonearm Simulation ---------- */
+  if(!deviceId){
+    statusMsg.textContent = 'Player still connecting — try again in a second.';
+    return;
+  }
+  await fetch(`https://api.spotify.com/v1/me/player/play?device_id=${deviceId}`,{
+    method:'PUT',
+    headers:{Authorization:'Bearer '+accessToken,'Content-Type':'application/json'},
+    body: JSON.stringify({context_uri: pl.uri})
+  });
+}
+
+playBtn.addEventListener('click', ()=> player && player.togglePlay());
+document.getElementById('nextBtn').addEventListener('click', ()=> player && player.nextTrack());
+document.getElementById('prevBtn').addEventListener('click', ()=> player && player.previousTrack());
+
+/* ---------- draggable tonearm ---------- */
 const plinthEl = document.querySelector('.plinth');
-const MIN_ANGLE = -34; // Resting, off record
-const MAX_ANGLE = -4;  // Playing, on record
+const MIN_ANGLE = -34; // resting, off the record
+const MAX_ANGLE = -4;  // dropped onto the record
 let armDragging = false;
 
-function pivotPoint() {
+function pivotPoint(){
   const r = plinthEl.getBoundingClientRect();
-  const scale = r.width / 240; // current scaling relative to original 240px size
+  const scale = r.width / 240;
   return { x: r.left + 248 * scale, y: r.top + 8 * scale };
 }
-function angleFromPivot(clientX, clientY) {
+function angleFromPivot(clientX, clientY){
   const p = pivotPoint();
-  // calculate angle (degrees) relative to top right spindle pivot
   return Math.atan2(clientY - p.y, clientX - p.x) * 180 / Math.PI;
 }
 
-tonearm.addEventListener('pointerdown', e => {
+tonearm.addEventListener('pointerdown', e=>{
   armDragging = true;
   tonearm.setPointerCapture(e.pointerId);
-  tonearm.style.transition = 'none'; // snappy dragging
+  tonearm.style.transition = 'none';
   tonearm.style.cursor = 'grabbing';
 });
-tonearm.addEventListener('pointermove', e => {
-  if (!armDragging) return;
+tonearm.addEventListener('pointermove', e=>{
+  if(!armDragging) return;
   let angle = angleFromPivot(e.clientX, e.clientY);
-  // Restrict to logical min/max bounds
   angle = Math.max(MIN_ANGLE, Math.min(MAX_ANGLE, angle));
   tonearm.style.transform = `rotate(${angle}deg)`;
 });
-tonearm.addEventListener('pointerup', e => {
-  if (!armDragging) return;
+tonearm.addEventListener('pointerup', e=>{
+  if(!armDragging) return;
   armDragging = false;
   tonearm.style.cursor = 'grab';
-  
-  // Snap to result based on current angle
   const angle = Math.max(MIN_ANGLE, Math.min(MAX_ANGLE, angleFromPivot(e.clientX, e.clientY)));
-  const droppedOnRecord = angle > (MIN_ANGLE + MAX_ANGLE) / 2; // closer to record than rest
-  
-  tonearm.style.transition = ''; // restore smooth transition
-  tonearm.style.transform = '';  // let CSS class control rotation
-
-  if (player) {
-    if (droppedOnRecord) player.resume().catch(() => {});
-    else player.pause().catch(() => {});
+  const droppedOnRecord = angle > (MIN_ANGLE + MAX_ANGLE) / 2;
+  tonearm.style.transition = '';
+  tonearm.style.transform = '';
+  if(player){
+    if(droppedOnRecord) player.resume().catch(()=>{});
+    else player.pause().catch(()=>{});
   }
 });
 
 handleRedirect();
-// Pre-fill client ID from last session
+
+// resume a session already in progress (client id typed, not yet redirected)
 const savedClientId = sessionStorage.getItem('vinyl_client_id');
-if (savedClientId) document.getElementById('clientId').value = savedClientId;
+if(savedClientId) document.getElementById('clientId').value = savedClientId;
 </script>
 </body>
 </html>
